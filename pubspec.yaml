@@ -1,0 +1,54 @@
+name: lesson_11
+description: A new Flutter project.
+
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.6 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+  http: ^0.13.4
+  cached_network_image: ^3.2.1
+  flutter_svg: ^1.1.1+1
+  dotted_border: ^2.0.0+2
+  pinput: ^2.2.11
+  dash: ^1.0.3
+  shared_preferences: ^2.0.15
+  rxdart: ^0.27.5
+  shimmer: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/icons/
+    - assets/bottomBarIcon/
+    - assets/account_icons/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+
