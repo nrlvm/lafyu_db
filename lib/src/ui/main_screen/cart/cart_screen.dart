@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_11/src/bloc/cart_bloc.dart';
-import 'package:lesson_11/src/bloc/product_block.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/card_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';

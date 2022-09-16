@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_11/src/ui/main_screen/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'src/ui/auth/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

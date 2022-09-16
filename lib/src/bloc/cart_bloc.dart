@@ -1,6 +1,5 @@
 import 'package:lesson_11/src/database/database_helper.dart';
 import 'package:lesson_11/src/model/card_model.dart';
-import 'package:lesson_11/src/provider/api_provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CartBloc {
