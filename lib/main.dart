@@ -3,7 +3,6 @@ import 'package:lesson_11/src/ui/main_screen/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'src/ui/auth/login_screen.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,7 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: token != "" ? const MainScreen() : const LoginScreen(),
+      // home: token != "" ? const MainScreen() : const LoginScreen(),
+      home: const MainScreen(),
     );
   }
 }

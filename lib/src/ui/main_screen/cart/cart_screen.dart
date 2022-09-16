@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lesson_11/src/bloc/cart_bloc.dart';
+import 'package:lesson_11/src/bloc/product_block.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
+import 'package:lesson_11/src/model/card_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:lesson_11/src/widget/cart/cart_widget.dart';
+import 'package:lesson_11/src/widget/shimmer/product/screen_shimmer.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -10,6 +15,12 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    cartBloc.allCart();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = Utils.height(context);
@@ -31,19 +42,25 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      // body: ListView(
-      //   children: [
-      //     ListView.builder(
-      //       itemBuilder: (context, index) {
-      //         return CartWidget(
-      //           data: data,
-      //           plus: plus,
-      //           minus: minus,
-      //         );
-      //       },
-      //     ),
-      //   ],
-      // ),
+      body: StreamBuilder<List<CartModel>>(
+        stream: cartBloc.getCart,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<CartModel> cartModel = snapshot.data!;
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return CartWidget(
+                  data: cartModel[index],
+                  plus: () {},
+                  minus: () {},
+                );
+              },
+              itemCount: cartModel.length,
+            );
+          }
+          return const ScreenShimmer();
+        },
+      ),
     );
   }
 }

@@ -1,8 +1,9 @@
-// ignore: depend_on_referenced_packages
-import 'package:lesson_11/src/model/card_model.dart';
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:path/path.dart';
-import 'dart:async';
 import 'package:sqflite/sqflite.dart';
+import 'package:lesson_11/src/model/card_model.dart';
+import 'dart:async';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
@@ -14,6 +15,7 @@ class DatabaseHelper {
   final String columnProductTitle = 'title';
   final String columnProductImage = 'image';
   final String columnProductPrice = 'price';
+  final String columnProductCardCount = 'card_count';
 
   static Database? _db;
 
@@ -41,13 +43,14 @@ class DatabaseHelper {
       '$columnProductId INTEGER PRIMARY KEY, '
       '$columnProductTitle TEXT, '
       '$columnProductImage TEXT, '
+      '$columnProductCardCount INTEGER, '
       '$columnProductPrice REAL)',
     );
   }
 
   /// save product
 
-  Future<int> saveProduct(CardModel data) async {
+  Future<int> saveProduct(CartModel data) async {
     var dbClient = await db;
     var result = await dbClient.insert(tableProductName, data.toJson());
     return result;
@@ -55,16 +58,36 @@ class DatabaseHelper {
 
   ///get all products
 
-  Future<List<CardModel>> getProducts() async {
+  Future<List<CartModel>> getProducts() async {
     var dbClient = await db;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM $tableProductName');
-    List<CardModel> products = [];
+    List<CartModel> products = [];
     for (int i = 0; i < list.length; i++) {
-      CardModel data = CardModel(
+      CartModel data = CartModel(
         id: list[i][columnProductId],
         title: list[i][columnProductTitle],
         image: list[i][columnProductImage],
         price: list[i][columnProductPrice],
+        cardCount: list[i][columnProductCardCount],
+      );
+      products.add(data);
+    }
+    return products;
+  }
+
+  Future<List<CartModel>> getProduct(int id) async {
+    var dbClient = await db;
+    List<Map> list = await dbClient.rawQuery(
+      'SELECT * FROM $tableProductName WHERE $columnProductId=$id',
+    );
+    List<CartModel> products = [];
+    for (int i = 0; i < list.length; i++) {
+      CartModel data = CartModel(
+        id: list[i][columnProductId],
+        title: list[i][columnProductTitle],
+        image: list[i][columnProductImage],
+        price: list[i][columnProductPrice],
+        cardCount: list[i][columnProductCardCount],
       );
       products.add(data);
     }
@@ -77,6 +100,17 @@ class DatabaseHelper {
       tableProductName,
       where: '$columnProductId = ?',
       whereArgs: [id],
+    );
+  }
+
+  ///update user info
+  Future<int> updateProduct(CartModel data) async {
+    var dbClient = await db;
+    return await dbClient.update(
+      tableProductName,
+      data.toJson(),
+      where: "$columnProductId = ?",
+      whereArgs: [data.id],
     );
   }
 

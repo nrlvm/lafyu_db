@@ -1,4 +1,3 @@
-
 import 'package:lesson_11/src/model/flash_sale_model.dart';
 
 class ProductDetailModel {
@@ -16,6 +15,7 @@ class ProductDetailModel {
     required this.review,
     required this.products,
     required this.category,
+    this.cardCount = 0,
   });
 
   int id;
@@ -31,6 +31,7 @@ class ProductDetailModel {
   Review review;
   List<FlashSaleResult> products;
   String category;
+  int cardCount;
 
   factory ProductDetailModel.fromJson(Map<String, dynamic> json) =>
       ProductDetailModel(
@@ -121,7 +122,7 @@ class Review {
         date: json["date"] == null
             ? DateTime.now()
             : DateTime.parse(json["date"]),
-        images: json["images"]??0,
+        images: json["images"] ?? 0,
         start: json["start"] ?? 0,
       );
 }

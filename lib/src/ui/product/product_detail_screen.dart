@@ -33,8 +33,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   void initState() {
     productBlock.allProductDetail(widget.id);
-    productBlock.getFlashSale;
-    productBlock.allFlashSale();
+
     productBlock.getDetail;
     _controller.addListener(() {
       setState(() {
@@ -694,42 +693,85 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 SizedBox(
                   height: 16 * h,
                 ),
-                GestureDetector(
-                  onTap: (){
-                    productBlock.saveCard(data);
-                  },
-                  child: Container(
-                    height: 56 * h,
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 16 * w,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 30,
-                          offset: const Offset(0, 10),
-                          color: AppColor.blue,
+                data.cardCount == 0
+                    ? GestureDetector(
+                        onTap: () {
+                          productBlock.saveCart(data);
+                        },
+                        child: Container(
+                          height: 56 * h,
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 16 * w,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 30,
+                                offset: const Offset(0, 10),
+                                color: AppColor.blue.withOpacity(0.24),
+                              ),
+                            ],
+                            color: AppColor.blue,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Add to Cart',
+                              style: TextStyle(
+                                fontFamily: AppColor.fontFamily,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14 * h,
+                                height: 25 / 14,
+                                letterSpacing: 0.5,
+                                color: AppColor.white,
+                              ),
+                            ),
+                          ),
                         ),
-                      ],
-                      color: AppColor.blue,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Add to Cart',
-                        style: TextStyle(
-                          fontFamily: AppColor.fontFamily,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14 * h,
-                          height: 25 / 14,
-                          letterSpacing: 0.5,
-                          color: AppColor.white,
+                      )
+                    : SizedBox(
+                        height: 56 * h,
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (data.cardCount > 1) {
+                                  data.cardCount--;
+                                  productBlock.updateCart(data);
+                                } else {
+                                  productBlock.deleteProduct(data);
+                                }
+                              },
+                              child: Container(
+                                width: 56 * h,
+                                color: Colors.grey,
+                                alignment: Alignment.center,
+                                child: Text("-"),
+                              ),
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  data.cardCount.toString(),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                data.cardCount++;
+                                productBlock.updateCart(data);
+                              },
+                              child: Container(
+                                width: 56 * h,
+                                color: Colors.grey,
+                                alignment: Alignment.center,
+                                child: Text("+"),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                ),
                 SizedBox(
                   height: 28 * h,
                 )
