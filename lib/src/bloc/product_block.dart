@@ -1,3 +1,4 @@
+import 'package:lesson_11/src/bloc/cart_bloc.dart';
 import 'package:lesson_11/src/database/database_helper.dart';
 import 'package:lesson_11/src/model/card_model.dart';
 import 'package:lesson_11/src/model/http_result.dart';
@@ -38,6 +39,7 @@ class ProductBlock {
     data.cardCount = 1;
     await dbh.saveProduct(cardModel);
     _fetchProductDetail.sink.add(data);
+    cartBloc.allCart();
   }
 
   updateCart(ProductDetailModel data) async {
@@ -50,12 +52,14 @@ class ProductBlock {
     );
     await dbh.updateProduct(cardModel);
     _fetchProductDetail.sink.add(data);
+    cartBloc.allCart();
   }
 
   deleteProduct(ProductDetailModel data) async {
     await dbh.deleteProduct(data.id);
     data.cardCount = 0;
     _fetchProductDetail.sink.add(data);
+    cartBloc.allCart();
   }
 }
 
