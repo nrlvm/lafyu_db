@@ -16,10 +16,10 @@ class ScreenShimmer extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        margin: EdgeInsets.symmetric(
-          horizontal: 16 * w,
-          vertical: 16 * h,
-        ),
+        // margin: EdgeInsets.symmetric(
+        //   horizontal: 16 * w,
+        //   vertical: 16 * h,
+        // ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: AppColor.white,

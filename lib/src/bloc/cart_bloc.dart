@@ -13,6 +13,17 @@ class CartBloc {
     List<CartModel> list = await dbh.getProducts();
     _fetchCart.sink.add(list);
   }
+
+  updateCart(List<CartModel> data, int index) async {
+    await dbh.updateProduct(data[index]);
+    _fetchCart.sink.add(data);
+  }
+
+  deleteProduct(List<CartModel> data, int index) async {
+    await dbh.deleteProduct(data[index].id);
+    data[index].cardCount = 0;
+    _fetchCart.sink.add(data);
+  }
 }
 
 final cartBloc = CartBloc();

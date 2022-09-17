@@ -33,7 +33,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   void initState() {
     productBlock.allProductDetail(widget.id);
-
     productBlock.getDetail;
     _controller.addListener(() {
       setState(() {
@@ -47,65 +46,66 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     double h = Utils.height(context);
     double w = Utils.width(context);
-    return Scaffold(
-      backgroundColor: AppColor.white.withOpacity(0.97),
-      appBar: AppBar(
-        backgroundColor: AppColor.white,
-        elevation: 1,
-        automaticallyImplyLeading: false,
-        centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset(
-                'assets/icons/left.svg',
-                height: 24 * h,
-                width: 24 * h,
+    return StreamBuilder<ProductDetailModel>(
+      stream: productBlock.getDetail,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          ProductDetailModel data = snapshot.data!;
+          return Scaffold(
+            backgroundColor: AppColor.white.withOpacity(0.97),
+            appBar: AppBar(
+              backgroundColor: AppColor.white,
+              elevation: 1,
+              automaticallyImplyLeading: false,
+              centerTitle: false,
+              title: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      await productBlock.updateCart(data);
+                      Navigator.pop(this.context);
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/left.svg',
+                      height: 24 * h,
+                      width: 24 * h,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 12 * w,
+                  ),
+                  Expanded(
+                    child: Text(
+                      data.name,
+                      style: TextStyle(
+                        fontFamily: AppColor.fontFamily,
+                        fontWeight: FontWeight.w700,
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: 16 * h,
+                        height: 24 / 16,
+                        letterSpacing: 0.5,
+                        color: AppColor.dark,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              width: 12 * w,
-            ),
-            Expanded(
-              child: Text(
-                widget.name,
-                style: TextStyle(
-                  fontFamily: AppColor.fontFamily,
-                  fontWeight: FontWeight.w700,
-                  overflow: TextOverflow.ellipsis,
-                  fontSize: 16 * h,
-                  height: 24 / 16,
-                  letterSpacing: 0.5,
-                  color: AppColor.dark,
+              actions: [
+                SvgPicture.asset(
+                  'assets/icons/search_grey.svg',
                 ),
-              ),
+                SizedBox(
+                  width: 16 * w,
+                ),
+                SvgPicture.asset(
+                  'assets/icons/more.svg',
+                ),
+                SizedBox(
+                  width: 12 * w,
+                ),
+              ],
             ),
-          ],
-        ),
-        actions: [
-          SvgPicture.asset(
-            'assets/icons/search_grey.svg',
-          ),
-          SizedBox(
-            width: 16 * w,
-          ),
-          SvgPicture.asset(
-            'assets/icons/more.svg',
-          ),
-          SizedBox(
-            width: 12 * w,
-          ),
-        ],
-      ),
-      body: StreamBuilder<ProductDetailModel>(
-        stream: productBlock.getDetail,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            ProductDetailModel data = snapshot.data!;
-            return Column(
+            body: Column(
               children: [
                 Expanded(
                   child: ListView(
@@ -730,8 +730,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ),
                       )
-                    : SizedBox(
+                    : Container(
                         height: 56 * h,
+                        margin: EdgeInsets.symmetric(horizontal: 16 * w),
                         child: Row(
                           children: [
                             GestureDetector(
@@ -745,9 +746,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               },
                               child: Container(
                                 width: 56 * h,
-                                color: Colors.grey,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: AppColor.blue,
+                                ),
                                 alignment: Alignment.center,
-                                child: Text("-"),
+                                child: SvgPicture.asset(
+                                  'assets/icons/minus.svg',
+                                  color: AppColor.dark,
+                                ),
                               ),
                             ),
                             Expanded(
@@ -764,9 +771,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               },
                               child: Container(
                                 width: 56 * h,
-                                color: Colors.grey,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: AppColor.blue,
+                                ),
                                 alignment: Alignment.center,
-                                child: Text("+"),
+                                child: SvgPicture.asset(
+                                  'assets/icons/plus.svg',
+                                  color: AppColor.dark,
+                                ),
                               ),
                             ),
                           ],
@@ -776,11 +789,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   height: 28 * h,
                 )
               ],
-            );
-          }
-          return const ScreenShimmer();
-        },
-      ),
+            ),
+          );
+        }
+        return const ScreenShimmer();
+      },
     );
   }
 }

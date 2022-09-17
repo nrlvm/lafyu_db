@@ -45,16 +45,29 @@ class _CartScreenState extends State<CartScreen> {
         stream: cartBloc.getCart,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<CartModel> cartModel = snapshot.data!;
+            List<CartModel> data = snapshot.data!;
             return ListView.builder(
               itemBuilder: (context, index) {
-                return CartWidget(
-                  data: cartModel[index],
-                  plus: () {},
-                  minus: () {},
-                );
+                return data[index].cardCount > 0
+                    ? CartWidget(
+                        data: data[index],
+                        plus: () {
+                          data[index].cardCount++;
+                          cartBloc.updateCart(data, index);
+                        },
+                        minus: () {
+                          if (data[index].cardCount > 1) {
+                            data[index].cardCount--;
+                            cartBloc.updateCart(data, index);
+                          }
+                        },
+                        delete: () {
+                          cartBloc.deleteProduct(data, index);
+                        },
+                      )
+                    : const SizedBox();
               },
-              itemCount: cartModel.length,
+              itemCount: data.length,
             );
           }
           return const ScreenShimmer();
