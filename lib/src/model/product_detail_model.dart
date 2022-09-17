@@ -16,6 +16,7 @@ class ProductDetailModel {
     required this.products,
     required this.category,
     this.cardCount = 0,
+    this.isFavorite = false,
   });
 
   int id;
@@ -32,6 +33,7 @@ class ProductDetailModel {
   List<FlashSaleResult> products;
   String category;
   int cardCount;
+  bool isFavorite;
 
   factory ProductDetailModel.fromJson(Map<String, dynamic> json) =>
       ProductDetailModel(

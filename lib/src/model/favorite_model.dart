@@ -1,18 +1,16 @@
-class CartModel {
+class FavoriteModel {
   final int id;
+  final double starCount;
+  final double price;
   final String title;
   final String image;
-  final double price;
-  int cardCount;
-  double starCount;
 
-  CartModel({
-    this.starCount = 0,
+  FavoriteModel({
     required this.id,
+    required this.starCount,
+    required this.price,
     required this.title,
     required this.image,
-    required this.price,
-    required this.cardCount,
   });
 
   Map<String, dynamic> toJson() => {
@@ -20,6 +18,6 @@ class CartModel {
         "title": title,
         "image": image,
         "price": price,
-        "card_count": cardCount,
+        "star_count": starCount,
       };
 }

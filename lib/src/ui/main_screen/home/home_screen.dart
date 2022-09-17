@@ -7,6 +7,7 @@ import 'package:lesson_11/src/model/flash_sale_model.dart';
 import 'package:lesson_11/src/model/home_model.dart';
 import 'package:lesson_11/src/model/super_flash_model.dart';
 import 'package:lesson_11/src/provider/api_provider.dart';
+import 'package:lesson_11/src/ui/auth/favorite/favorite_screen.dart';
 import 'package:lesson_11/src/ui/main_screen/home/offer_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/category/category_widget.dart';
@@ -90,8 +91,18 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/icons/love.svg',
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FavoriteScreen(),
+                    ),
+                  );
+                },
+                child: SvgPicture.asset(
+                  'assets/icons/love.svg',
+                ),
               ),
               SizedBox(
                 width: 16 * w,

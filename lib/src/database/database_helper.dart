@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:lesson_11/src/model/favorite_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:lesson_11/src/model/card_model.dart';
@@ -16,6 +17,13 @@ class DatabaseHelper {
   final String columnProductImage = 'image';
   final String columnProductPrice = 'price';
   final String columnProductCardCount = 'card_count';
+
+  final String tableFavoriteName = 'favoriteTable';
+  final String columnFavoriteId = 'id';
+  final String columnFavoriteTitle = 'title';
+  final String columnFavoriteImage = 'image';
+  final String columnFavoritePrice = 'price';
+  final String columnFavoriteStarCount = 'star_count';
 
   static Database? _db;
 
@@ -46,10 +54,53 @@ class DatabaseHelper {
       '$columnProductCardCount INTEGER, '
       '$columnProductPrice REAL)',
     );
+    await db.execute(
+      'CREATE TABLE $tableFavoriteName('
+      '$columnFavoriteId INTEGER PRIMARY KEY, '
+      '$columnFavoriteTitle TEXT, '
+      '$columnFavoriteImage TEXT, '
+      '$columnFavoriteStarCount REAL, '
+      '$columnFavoritePrice REAL)',
+    );
+  }
+
+  ///save product to favorite
+  Future<int> saveFavorite(FavoriteModel data) async {
+    var dbClient = await db;
+    var result = await dbClient.insert(tableFavoriteName, data.toJson());
+    return result;
+  }
+
+  /// get all favorites
+  Future<List<FavoriteModel>> getFavorites() async {
+    var dbClient = await db;
+    List<Map> list =
+        await dbClient.rawQuery('SELECT * FROM $tableFavoriteName');
+    List<FavoriteModel> favorites = [];
+    for (int i = 0; i < list.length; i++) {
+      FavoriteModel data = FavoriteModel(
+        id: list[i][columnFavoriteId],
+        starCount: list[i][columnFavoriteStarCount],
+        price: list[i][columnFavoritePrice],
+        title: list[i][columnFavoriteTitle],
+        image: list[i][columnFavoriteImage],
+      );
+      favorites.add(data);
+    }
+    return favorites;
+  }
+
+  /// delete favorite
+  Future<int> deleteFavorite(int id) async {
+    var dbClient = await db;
+    return await dbClient.delete(
+      tableFavoriteName,
+      where: '$columnFavoriteId = ?',
+      whereArgs: [id],
+    );
   }
 
   /// save product
-
   Future<int> saveProduct(CartModel data) async {
     var dbClient = await db;
     var result = await dbClient.insert(tableProductName, data.toJson());
@@ -57,7 +108,6 @@ class DatabaseHelper {
   }
 
   ///get all products
-
   Future<List<CartModel>> getProducts() async {
     var dbClient = await db;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM $tableProductName');
@@ -103,7 +153,7 @@ class DatabaseHelper {
     );
   }
 
-  ///update user info
+  ///update product
   Future<int> updateProduct(CartModel data) async {
     var dbClient = await db;
     return await dbClient.update(

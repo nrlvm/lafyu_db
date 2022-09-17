@@ -33,7 +33,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   void initState() {
     productBlock.allProductDetail(widget.id);
-    productBlock.getDetail;
     _controller.addListener(() {
       setState(() {
         currentPage = _controller.page!.toInt();
@@ -224,8 +223,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             SizedBox(
                               width: 16 * w,
                             ),
-                            SvgPicture.asset(
-                              'assets/icons/love.svg',
+                            GestureDetector(
+                              onTap: () {
+                                if (!data.isFavorite) {
+                                  productBlock.saveFavorite(data);
+                                  // data.isFavorite = !data.isFavorite;
+                                  print('saved');
+                                } else {
+                                  productBlock.deleteFavorite(data);
+                                  // data.isFavorite = !data.isFavorite;
+                                  print('deleted');
+                                }
+                              },
+                              child: data.isFavorite
+                                  ? SvgPicture.asset(
+                                      'assets/icons/star_y.svg',
+                                      height: 20 * h,
+                                      width: 20 * h,
+                                    )
+                                  : SvgPicture.asset(
+                                      'assets/icons/love.svg',
+                                      color: AppColor.dark,
+                                    ),
                             ),
                           ],
                         ),
