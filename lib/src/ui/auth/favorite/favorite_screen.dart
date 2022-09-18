@@ -108,6 +108,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   ),
                   shrinkWrap: true,
                   itemCount: (data.length + _gridCount + 1) ~/ _gridCount,
+                  physics: const NeverScrollableScrollPhysics(),
                 ),
               ],
             );
