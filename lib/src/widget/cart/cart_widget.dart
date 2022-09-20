@@ -4,6 +4,7 @@ import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/card_model.dart';
 import 'package:lesson_11/src/ui/product/product_detail_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 
 class CartWidget extends StatelessWidget {
   final CartModel data;
@@ -54,11 +55,11 @@ class CartWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Image.network(
-              data.image,
+            CustomNetworkImage(
+              image: data.image,
               height: 72 * h,
               width: 72 * h,
-              fit: BoxFit.fill,
+              borderRadius: BorderRadius.circular(2),
             ),
             SizedBox(
               width: 12 * w,

@@ -4,6 +4,7 @@ import 'package:lesson_11/src/bloc/product_block.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/product_detail_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 import 'package:lesson_11/src/widget/flash_sale/flash_sale_widget.dart';
 import 'package:lesson_11/src/widget/product/color_widget.dart';
 import 'package:lesson_11/src/widget/product/product_review/product_review_widget.dart';
@@ -114,7 +115,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         child: PageView.builder(
                           controller: _controller,
                           itemBuilder: (context, index) {
-                            return Image.network(data.images[index].image);
+                            return CustomNetworkImage(
+                              image: data.images[index].image,
+                            );
                           },
                           itemCount: data.images.length,
                         ),
