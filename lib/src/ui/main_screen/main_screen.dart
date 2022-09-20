@@ -10,8 +10,9 @@ import 'package:lesson_11/src/utils/utils.dart';
 import 'account/account_screen.dart';
 
 class MainScreen extends StatefulWidget {
-
-  const MainScreen({Key? key,}) : super(key: key);
+  const MainScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -67,11 +68,12 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/bottomBarIcon/search.svg',
-                color: _selectedIndex == 1 ? AppColor.blue : AppColor.grey,
-              ),
-              label: 'Explore'),
+            icon: SvgPicture.asset(
+              'assets/bottomBarIcon/search.svg',
+              color: _selectedIndex == 1 ? AppColor.blue : AppColor.grey,
+            ),
+            label: 'Explore',
+          ),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/bottomBarIcon/cart.svg',
@@ -79,17 +81,19 @@ class _MainScreenState extends State<MainScreen> {
               ),
               label: 'Cart'),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/bottomBarIcon/offer.svg',
-                color: _selectedIndex == 3 ? AppColor.blue : AppColor.grey,
-              ),
-              label: 'Offer'),
+            icon: SvgPicture.asset(
+              'assets/bottomBarIcon/offer.svg',
+              color: _selectedIndex == 3 ? AppColor.blue : AppColor.grey,
+            ),
+            label: 'Offer',
+          ),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/bottomBarIcon/user.svg',
-                color: _selectedIndex == 4 ? AppColor.blue : AppColor.grey,
-              ),
-              label: 'Account'),
+            icon: SvgPicture.asset(
+              'assets/bottomBarIcon/user.svg',
+              color: _selectedIndex == 4 ? AppColor.blue : AppColor.grey,
+            ),
+            label: 'Account',
+          ),
         ],
       ),
     );

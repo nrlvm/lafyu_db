@@ -16,12 +16,16 @@ class FavoriteBloc{
 
   saveFavorite(List<FavoriteModel> data, int index) async {
     await dbh.saveFavorite(data[index]);
-    _fetchFavorite.sink.add(data);
+    allFavorite();
   }
 
   deleteFavorite(List<FavoriteModel> data, int index)async{
     await dbh.deleteFavorite(data[index].id);
-    _fetchFavorite.sink.add(data);
+    allFavorite();
+  }
+
+  isFavorite(){
+
   }
 }
 

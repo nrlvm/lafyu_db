@@ -90,6 +90,26 @@ class DatabaseHelper {
     return favorites;
   }
 
+  /// get all favorites
+  Future<List<FavoriteModel>> getFavorite(int id) async {
+    var dbClient = await db;
+    List<Map> list = await dbClient.rawQuery(
+      'SELECT * FROM $tableFavoriteName WHERE $columnProductId=$id',
+    );
+    List<FavoriteModel> favorites = [];
+    for (int i = 0; i < list.length; i++) {
+      FavoriteModel data = FavoriteModel(
+        id: list[i][columnFavoriteId],
+        starCount: list[i][columnFavoriteStarCount],
+        price: list[i][columnFavoritePrice],
+        title: list[i][columnFavoriteTitle],
+        image: list[i][columnFavoriteImage],
+      );
+      favorites.add(data);
+    }
+    return favorites;
+  }
+
   /// delete favorite
   Future<int> deleteFavorite(int id) async {
     var dbClient = await db;

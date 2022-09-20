@@ -10,6 +10,7 @@ class CartWidget extends StatelessWidget {
   final Function() plus;
   final Function() minus;
   final Function() delete;
+  final Function() favorite;
 
   const CartWidget({
     Key? key,
@@ -17,6 +18,7 @@ class CartWidget extends StatelessWidget {
     required this.plus,
     required this.minus,
     required this.delete,
+    required this.favorite,
   }) : super(key: key);
 
   @override
@@ -79,10 +81,22 @@ class CartWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SvgPicture.asset(
-                        'assets/icons/love.svg',
-                        height: 24 * h,
-                        width: 24 * h,
+                      GestureDetector(
+                        onTap: () {
+                          favorite();
+                        },
+                        child: data.isFavorite
+                            ? SvgPicture.asset(
+                                'assets/icons/star.svg',
+                                height: 24 * h,
+                                width: 24 * h,
+                                // color: AppColor.red,
+                              )
+                            : SvgPicture.asset(
+                                'assets/icons/love.svg',
+                                height: 24 * h,
+                                width: 24 * h,
+                              ),
                       ),
                       SizedBox(
                         width: 8 * w,

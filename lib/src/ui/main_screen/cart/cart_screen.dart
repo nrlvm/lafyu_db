@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_11/src/bloc/cart_bloc.dart';
+import 'package:lesson_11/src/bloc/favorite_bloc.dart';
+import 'package:lesson_11/src/bloc/product_block.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/card_model.dart';
+import 'package:lesson_11/src/model/favorite_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/cart/cart_widget.dart';
 import 'package:lesson_11/src/widget/shimmer/product/screen_shimmer.dart';
@@ -53,16 +56,23 @@ class _CartScreenState extends State<CartScreen> {
                         data: data[index],
                         plus: () {
                           data[index].cardCount++;
-                          cartBloc.updateCart(data, index);
+                          cartBloc.updateCart(data[index]);
                         },
                         minus: () {
                           if (data[index].cardCount > 1) {
                             data[index].cardCount--;
-                            cartBloc.updateCart(data, index);
+                            cartBloc.updateCart(data[index]);
                           }
                         },
                         delete: () {
-                          cartBloc.deleteProduct(data, index);
+                          cartBloc.deleteProduct(data[index].id);
+                        },
+                        favorite: () {
+                          if (data[index].isFavorite) {
+                            cartBloc.deleteFavorite(data[index].id);
+                          } else {
+                            cartBloc.saveFavorite(data[index]);
+                          }
                         },
                       )
                     : const SizedBox();

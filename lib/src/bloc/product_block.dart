@@ -21,10 +21,13 @@ class ProductBlock {
     if (responseProductDetail.isSuccess) {
       ProductDetailModel productDetailData =
           ProductDetailModel.fromJson(responseProductDetail.result);
-
       List<CartModel> card = await dbh.getProduct(productDetailData.id);
+      List<FavoriteModel> fav = await dbh.getFavorite(productDetailData.id);
       if (card.isNotEmpty) {
         productDetailData.cardCount = card.first.cardCount;
+      }
+      if (fav.isNotEmpty) {
+        productDetailData.isFavorite = true;
       }
       _fetchProductDetail.sink.add(productDetailData);
     }
@@ -38,16 +41,16 @@ class ProductBlock {
       title: data.name,
       image: data.images.isNotEmpty ? data.images.first.image : '',
     );
-    data.isFavorite = true;
     await dbh.saveFavorite(favoriteModel);
+    data.isFavorite = true;
     _fetchProductDetail.sink.add(data);
     cartBloc.allCart();
     favoriteBloc.allFavorite();
   }
 
   deleteFavorite(ProductDetailModel data) async {
-    await dbh.deleteFavorite(data.id);
     data.isFavorite = false;
+    await dbh.deleteFavorite(data.id);
     _fetchProductDetail.sink.add(data);
     cartBloc.allCart();
     favoriteBloc.allFavorite();
@@ -66,6 +69,7 @@ class ProductBlock {
     await dbh.saveProduct(cardModel);
     _fetchProductDetail.sink.add(data);
     cartBloc.allCart();
+    favoriteBloc.allFavorite();
   }
 
   updateCart(ProductDetailModel data) async {
@@ -82,9 +86,9 @@ class ProductBlock {
     cartBloc.allCart();
   }
 
-  deleteProduct(ProductDetailModel data) async {
-    await dbh.deleteProduct(data.id);
+  deleteCart(ProductDetailModel data) async {
     data.cardCount = 0;
+    await dbh.deleteProduct(data.id);
     _fetchProductDetail.sink.add(data);
     cartBloc.allCart();
   }

@@ -224,13 +224,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               width: 16 * w,
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 if (!data.isFavorite) {
-                                  productBlock.saveFavorite(data);
+                                  await productBlock.saveFavorite(data);
                                   // data.isFavorite = !data.isFavorite;
                                   print('saved');
                                 } else {
-                                  productBlock.deleteFavorite(data);
+                                  await productBlock.deleteFavorite(data);
                                   // data.isFavorite = !data.isFavorite;
                                   print('deleted');
                                 }
@@ -760,7 +760,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   data.cardCount--;
                                   productBlock.updateCart(data);
                                 } else {
-                                  productBlock.deleteProduct(data);
+                                  productBlock.deleteCart(data);
                                 }
                               },
                               child: Container(

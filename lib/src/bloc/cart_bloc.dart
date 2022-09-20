@@ -1,5 +1,7 @@
+import 'package:lesson_11/src/bloc/favorite_bloc.dart';
 import 'package:lesson_11/src/database/database_helper.dart';
 import 'package:lesson_11/src/model/card_model.dart';
+import 'package:lesson_11/src/model/favorite_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CartBloc {
@@ -10,19 +12,43 @@ class CartBloc {
   Stream<List<CartModel>> get getCart => _fetchCart.stream;
 
   allCart() async {
-    List<CartModel> list = await dbh.getProducts();
-    _fetchCart.sink.add(list);
+    List<CartModel> card = await dbh.getProducts();
+    List<FavoriteModel> fav = await dbh.getFavorites();
+    for (int i = 0; i < card.length; i++) {
+      for (int j = 0; j < fav.length; j++) {
+        if (card[i].id == fav[j].id) {
+          card[i].isFavorite = true;
+          break;
+        }
+      }
+    }
+    _fetchCart.sink.add(card);
   }
 
-  updateCart(List<CartModel> data, int index) async {
-    await dbh.updateProduct(data[index]);
-    _fetchCart.sink.add(data);
+  updateCart(CartModel data) async {
+    await dbh.updateProduct(data);
+    allCart();
   }
 
-  deleteProduct(List<CartModel> data, int index) async {
-    await dbh.deleteProduct(data[index].id);
-    data[index].cardCount = 0;
-    _fetchCart.sink.add(data);
+  deleteProduct(int id) async {
+    await dbh.deleteProduct(id);
+  }
+
+  saveFavorite(CartModel data) async {
+    FavoriteModel favoriteModel = FavoriteModel(
+      id: data.id,
+      starCount: data.starCount,
+      price: data.price,
+      title: data.title,
+      image: data.image,
+    );
+    await dbh.saveFavorite(favoriteModel);
+    allCart();
+  }
+
+  deleteFavorite(int id) async {
+    await dbh.deleteFavorite(id);
+    allCart();
   }
 }
 

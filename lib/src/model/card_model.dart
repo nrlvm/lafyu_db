@@ -5,9 +5,11 @@ class CartModel {
   final double price;
   int cardCount;
   double starCount;
+  bool isFavorite;
 
   CartModel({
     this.starCount = 0,
+    this.isFavorite = false,
     required this.id,
     required this.title,
     required this.image,

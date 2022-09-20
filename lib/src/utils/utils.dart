@@ -6,7 +6,9 @@ class Utils {
   }
 
   static double height(BuildContext context) {
+    /// 14 pro max
     return MediaQuery.of(context).size.height / 812;
+    ///iPhone SE II
+    // return MediaQuery.of(context).size.height / 667;
   }
 }
-
