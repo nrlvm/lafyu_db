@@ -9,6 +9,7 @@ import 'package:lesson_11/src/ui/main_screen/account/profile/name/change_name_sc
 import 'package:lesson_11/src/ui/main_screen/account/profile/phone_number_screen/phone_number.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/account/profile_widget.dart';
+import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -77,15 +78,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // ClipRRect(
-                      //   borderRadius: BorderRadius.circular(72),
-                      //   child: Image.network(
-                      //     data.user.avatar,
-                      //     height: 72 * h,
-                      //     width: 72 * h,
-                      //     fit: BoxFit.fill,
-                      //   ),
-                      // ),
+                      CustomNetworkImage(
+                        image: data.user.avatar,
+                        height: 72 * h,
+                        width: 72 * h,
+                        boxFit: BoxFit.fill,
+                        borderRadius: BorderRadius.circular(72),
+                      ),
                       SizedBox(
                         width: 16 * w,
                       ),
@@ -130,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             )
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

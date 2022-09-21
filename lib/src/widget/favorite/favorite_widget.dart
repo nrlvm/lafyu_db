@@ -4,6 +4,7 @@ import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/favorite_model.dart';
 import 'package:lesson_11/src/ui/product/product_detail_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 
 class FavoriteWidget extends StatelessWidget {
   final FavoriteModel data;
@@ -50,9 +51,8 @@ class FavoriteWidget extends StatelessWidget {
               width: 133 * h,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Image.network(
-                  data.image,
-                  fit: BoxFit.fill,
+                child: CustomNetworkImage(
+                  image: data.image,
                 ),
               ),
             ),

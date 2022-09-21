@@ -4,6 +4,7 @@ import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/flash_sale_model.dart';
 import 'package:lesson_11/src/ui/product/product_detail_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 
 class HomeSaleWidget extends StatelessWidget {
   final FlashSaleResult data;
@@ -12,6 +13,7 @@ class HomeSaleWidget extends StatelessWidget {
     Key? key,
     required this.data,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     double h = Utils.height(context);
@@ -22,7 +24,10 @@ class HomeSaleWidget extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return ProductDetailScreen(id: data.id, name: data.name,);
+              return ProductDetailScreen(
+                id: data.id,
+                name: data.name,
+              );
             },
           ),
         );
@@ -49,9 +54,9 @@ class HomeSaleWidget extends StatelessWidget {
               width: 133 * h,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Image.network(
-                  data.images.image,
-                  fit: BoxFit.fill,
+                child: CustomNetworkImage(
+                  image: data.images.image,
+                  boxFit: BoxFit.fill,
                 ),
               ),
             ),

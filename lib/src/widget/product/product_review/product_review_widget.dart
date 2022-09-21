@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/product_detail_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 
 class ProductReviewWidget extends StatelessWidget {
   final Review data;
@@ -25,10 +26,8 @@ class ProductReviewWidget extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(48),
-                child: Image.network(
-                  data.user.avatar,
-                  height: 48 * h,
-                  width: 48 * h,
+                child: CustomNetworkImage(
+                  image: data.user.avatar,
                 ),
               ),
               SizedBox(
@@ -137,7 +136,9 @@ class ProductReviewWidget extends StatelessWidget {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(5),
-                            child: Image.network(data.images[index]),
+                            child: CustomNetworkImage(
+                              image: data.images[index],
+                            ),
                           ),
                           SizedBox(
                             width: 12 * w,

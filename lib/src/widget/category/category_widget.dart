@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/category_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 
 class CategoryWidget extends StatelessWidget {
   final CategoryResult data;
@@ -27,8 +28,8 @@ class CategoryWidget extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Image.network(
-                data.image,
+              child: CustomNetworkImage(
+                image: data.image,
                 height: 24 * h,
                 width: 24 * h,
               ),

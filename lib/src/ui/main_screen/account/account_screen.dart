@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
+import 'package:lesson_11/src/ui/main_screen/account/address/address_screen.dart';
 import 'package:lesson_11/src/ui/main_screen/account/profile/profile_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/account/account_widget.dart';
@@ -49,7 +50,20 @@ class _AccountScreenState extends State<AccountScreen> {
             child: const AccountWidget(pic: 'user.svg', text: 'Profile'),
           ),
           const AccountWidget(pic: 'bag.svg', text: 'Order'),
-          const AccountWidget(pic: 'location.svg', text: 'Addres'),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddressesScreen(),
+                ),
+              );
+            },
+            child: const AccountWidget(
+              pic: 'location.svg',
+              text: 'Address',
+            ),
+          ),
           const AccountWidget(pic: 'card.svg', text: 'Payment'),
         ],
       ),

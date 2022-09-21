@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:lesson_11/src/model/address_model.dart';
 import 'package:lesson_11/src/model/favorite_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -24,6 +25,12 @@ class DatabaseHelper {
   final String columnFavoriteImage = 'image';
   final String columnFavoritePrice = 'price';
   final String columnFavoriteStarCount = 'star_count';
+
+  final String tableAddressName = 'addressTable';
+  final String columnAddressId = 'id';
+  final String columnAddressName = 'name';
+  final String columnAddressPhoneNumber = 'phone_number';
+  final String columnAddressLocation = 'location';
 
   static Database? _db;
 
@@ -61,6 +68,60 @@ class DatabaseHelper {
       '$columnFavoriteImage TEXT, '
       '$columnFavoriteStarCount REAL, '
       '$columnFavoritePrice REAL)',
+    );
+    await db.execute(
+      'CREATE TABLE $tableAddressName('
+      '$columnAddressId INTEGER PRIMARY KEY AUTOINCREMENT, '
+      '$columnAddressName TEXT, '
+      '$columnAddressLocation TEXT, '
+      '$columnAddressPhoneNumber TEXT) ',
+    );
+  }
+
+  ///save address
+  Future<int> saveAddress(AddressModel data) async {
+    var dbClient = await db;
+    var result = await dbClient.insert(tableAddressName, data.toJson());
+    return result;
+  }
+
+  ///get all addresses
+  Future<List<AddressModel>> getAddresses() async {
+    var dbClient = await db;
+    List<Map> list = await dbClient.rawQuery(
+      'SELECT * FROM $tableAddressName',
+    );
+    List<AddressModel> addresses = [];
+    for (int i = 0; i < list.length; i++) {
+      AddressModel model = AddressModel(
+        id: list[i][columnAddressId],
+        name: list[i][columnAddressName],
+        pNumber: list[i][columnAddressPhoneNumber],
+        location: list[i][columnAddressLocation],
+      );
+      addresses.add(model);
+    }
+    return addresses;
+  }
+
+  ///delete address
+  deleteAddress(int id) async {
+    var dbClient = await db;
+    return await dbClient.delete(
+      tableAddressName,
+      where: '$columnAddressId = ?',
+      whereArgs: [id],
+    );
+  }
+
+  /// update address
+  updateAddress(AddressModel data) async {
+    var dbClient = await db;
+    return await dbClient.update(
+      tableAddressName,
+      data.toJson(),
+      where: "$columnAddressId = ?",
+      whereArgs: [data.id],
     );
   }
 

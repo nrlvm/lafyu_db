@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/super_flash_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 
 class SuperFlashWidget extends StatelessWidget {
   final SuperFlashModelResult data;
@@ -21,10 +22,10 @@ class SuperFlashWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: Image.network(
-              data.image,
+            child: CustomNetworkImage(
+              image: data.image,
               width: MediaQuery.of(context).size.width,
-              fit: BoxFit.fitWidth,
+              boxFit: BoxFit.fitWidth,
             ),
           ),
           Positioned(
