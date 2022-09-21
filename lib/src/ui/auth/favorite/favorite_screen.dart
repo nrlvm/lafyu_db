@@ -67,7 +67,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<FavoriteModel> data = snapshot.data!;
-            print(data.length);
             return ListView(
               children: [
                 ListView.builder(

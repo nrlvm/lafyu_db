@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
-import 'package:lesson_11/src/utils/utils.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ScreenShimmer extends StatelessWidget {
@@ -8,8 +7,6 @@ class ScreenShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double h = Utils.height(context);
-    double w = Utils.width(context);
     return Shimmer.fromColors(
       baseColor: AppColor.shimmerBase,
       highlightColor: AppColor.shimmerHighlight,

@@ -68,6 +68,9 @@ class _AddressesScreenState extends State<AddressesScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<AddressModel> data = snapshot.data!;
+            if (data.length == 1) {
+              selectedIndex = 0;
+            }
             return Column(
               children: [
                 SizedBox(
@@ -97,7 +100,6 @@ class _AddressesScreenState extends State<AddressesScreen> {
                         delete: () {
                           addressBloc.deleteAddress(data[index].id);
                           setState(() {});
-                          print(index);
                         },
                       );
                     },

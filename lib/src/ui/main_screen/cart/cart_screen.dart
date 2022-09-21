@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_11/src/bloc/cart_bloc.dart';
-import 'package:lesson_11/src/bloc/favorite_bloc.dart';
-import 'package:lesson_11/src/bloc/product_block.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/card_model.dart';
-import 'package:lesson_11/src/model/favorite_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/cart/cart_widget.dart';
 import 'package:lesson_11/src/widget/shimmer/product/screen_shimmer.dart';
@@ -234,7 +231,7 @@ class _CartScreenState extends State<CartScreen> {
                     color: AppColor.blue,
                     boxShadow: [
                       BoxShadow(
-                        offset: Offset(0, 10),
+                        offset: const Offset(0, 10),
                         blurRadius: 30,
                         color: AppColor.blue.withOpacity(0.24),
                       ),

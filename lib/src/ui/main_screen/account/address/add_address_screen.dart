@@ -186,7 +186,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             GestureDetector(
               onTap: () async {
                 if (name.text.isNotEmpty &&

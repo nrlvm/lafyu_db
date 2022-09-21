@@ -230,13 +230,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               onTap: () async {
                                 if (!data.isFavorite) {
                                   await productBlock.saveFavorite(data);
-                                  // data.isFavorite = !data.isFavorite;
-                                  print('saved');
                                 } else {
                                   await productBlock.deleteFavorite(data);
-                                  // data.isFavorite = !data.isFavorite;
-                                  print('deleted');
-                                }
+                                  }
                               },
                               child: data.isFavorite
                                   ? SvgPicture.asset(

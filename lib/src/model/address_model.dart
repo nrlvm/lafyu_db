@@ -6,12 +6,10 @@ class AddressModel {
     required this.location,
   });
 
-
   int id;
   final String name;
   final String pNumber;
   final String location;
-
 
   Map<String, dynamic> toJson() => {
         "name": name,

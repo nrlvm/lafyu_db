@@ -56,7 +56,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
               width: 12 * h,
             ),
             Text(
-              'Add Address',
+              'Edit Address',
               style: TextStyle(
                 fontFamily: AppColor.fontFamily,
                 fontWeight: FontWeight.w700,
@@ -197,20 +197,19 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             GestureDetector(
-              onTap: () async {
-                print('${name.text} ${address.text}, ${phoneNumber.text}');
+              onTap: () {
                 if (name.text.isNotEmpty &&
                     address.text.isNotEmpty &&
                     phoneNumber.text.isNotEmpty) {
-                  await addressBloc.updateAddress(
-                    AddressModel(
-                      name: name.text,
-                      pNumber: phoneNumber.text,
-                      location: address.text,
-                    ),
+                  AddressModel model = AddressModel(
+                    id: widget.data.id,
+                    name: name.text,
+                    pNumber: phoneNumber.text,
+                    location: address.text,
                   );
+                  addressBloc.updateAddress(model);
                   Navigator.pop(this.context);
                 }
               },
@@ -223,7 +222,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'Add Address',
+                    'Save Address',
                     style: TextStyle(
                       fontFamily: AppColor.fontFamily,
                       fontWeight: FontWeight.w700,
