@@ -7,8 +7,11 @@ class AccountWidget extends StatelessWidget {
   final String pic;
   final String text;
 
-  const AccountWidget({Key? key, required this.pic, required this.text})
-      : super(key: key);
+  const AccountWidget({
+    Key? key,
+    required this.pic,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -6,8 +6,7 @@ import 'package:lesson_11/src/model/category_model.dart';
 import 'package:lesson_11/src/model/flash_sale_model.dart';
 import 'package:lesson_11/src/model/home_model.dart';
 import 'package:lesson_11/src/model/super_flash_model.dart';
-import 'package:lesson_11/src/provider/api_provider.dart';
-import 'package:lesson_11/src/ui/auth/favorite/favorite_screen.dart';
+import 'package:lesson_11/src/ui/main_screen/favorite/favorite_screen.dart';
 import 'package:lesson_11/src/ui/main_screen/home/offer_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/category/category_widget.dart';
@@ -33,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PageController controller = PageController();
   int currentPage = 0;
-  ApiProvider apiProvider = ApiProvider();
 
   @override
   void initState() {
@@ -55,76 +53,34 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: AppColor.white,
         elevation: 1,
-        centerTitle: false,
-        title: Container(
-          padding: EdgeInsets.all(8 * w),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: AppColor.light),
-          ),
-          child: Row(
-            children: [
-              SvgPicture.asset(
-                'assets/icons/search_blue.svg',
-                width: 16 * w,
-                height: 16 * w,
-              ),
-              SizedBox(
-                width: 8 * w,
-              ),
-              Expanded(
-                child: Text(
-                  'Search Product',
-                  style: TextStyle(
-                    fontFamily: AppColor.fontFamily,
-                    fontSize: 12 * h,
-                    height: 21.6 / 12,
-                    letterSpacing: 0.5,
-                    color: AppColor.grey,
-                  ),
-                ),
-              ),
-            ],
+        centerTitle: true,
+        title: Text(
+          'Home',
+          style: TextStyle(
+            fontFamily: AppColor.fontFamily,
+            fontWeight: FontWeight.w500,
+            fontSize: 20 * h,
+            color: AppColor.dark,
           ),
         ),
         actions: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FavoriteScreen(),
-                    ),
-                  );
-                },
-                child: SvgPicture.asset(
-                  'assets/icons/love.svg',
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FavoriteScreen(),
                 ),
+              );
+            },
+            child: Container(
+              color: Colors.transparent,
+              width: 56 * h,
+              child: SvgPicture.asset(
+                'assets/icons/love.svg',
+                fit: BoxFit.none,
               ),
-              SizedBox(
-                width: 16 * w,
-              ),
-              Stack(
-                alignment: AlignmentDirectional.topEnd,
-                children: [
-                  SvgPicture.asset('assets/icons/notification.svg'),
-                  Container(
-                    height: 8 * h,
-                    width: 8 * h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4 * h),
-                      color: AppColor.red,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                width: 16 * w,
-              ),
-            ],
+            ),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lesson_11/src/ui/auth/login_screen.dart';
 import 'package:lesson_11/src/ui/main_screen/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,32 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: token != "" ? const MainScreen() : const LoginScreen(),
-      home: const MainScreen(),
+      home: token != "" ? const MainScreen() : const LoginScreen(),
+      // home: const MainScreen(),
     );
   }
 }
-
-// void main() {
-//   runApp(
-//     const MyApp(),
-//   );
-// }
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({
-//     Key? key,
-//   }) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const LoginScreen(),
-//     );
-//   }
-// }

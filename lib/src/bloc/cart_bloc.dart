@@ -31,6 +31,7 @@ class CartBloc {
 
   deleteProduct(int id) async {
     await dbh.deleteProduct(id);
+    allCart();
   }
 
   saveFavorite(CartModel data) async {
@@ -47,6 +48,11 @@ class CartBloc {
 
   deleteFavorite(int id) async {
     await dbh.deleteFavorite(id);
+    allCart();
+  }
+
+  clearCart()async{
+    await dbh.clearCart();
     allCart();
   }
 }

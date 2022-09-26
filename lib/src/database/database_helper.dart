@@ -95,7 +95,7 @@ class DatabaseHelper {
     for (int i = 0; i < list.length; i++) {
       AddressModel model = AddressModel(
         id: list[i][columnAddressId],
-        name: list[i][columnAddressName],
+        city: list[i][columnAddressName],
         pNumber: list[i][columnAddressPhoneNumber],
         location: list[i][columnAddressLocation],
       );
@@ -245,7 +245,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> clear() async {
+  Future<void> clearCart() async {
     var dbClient = await db;
     await dbClient.rawQuery('DELETE FROM $tableProductName');
   }

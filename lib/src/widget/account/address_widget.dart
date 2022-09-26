@@ -10,6 +10,7 @@ class AddressWidget extends StatelessWidget {
   final Function() onTap;
   final Function() edit;
   final Function() delete;
+  final bool canChoose;
 
   const AddressWidget({
     Key? key,
@@ -18,10 +19,15 @@ class AddressWidget extends StatelessWidget {
     required this.onTap,
     required this.edit,
     required this.delete,
+    required this.canChoose,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+   Color borderColor = AppColor.light;
+    if(canChoose && isSelected){
+      borderColor = AppColor.blue;
+    }
     double h = Utils.height(context);
     double w = Utils.width(context);
     return GestureDetector(
@@ -30,21 +36,20 @@ class AddressWidget extends StatelessWidget {
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 240 * h,
         padding: EdgeInsets.symmetric(horizontal: 24 * w, vertical: 24 * h),
-        margin: EdgeInsets.only(left: 16 * w,right: 16 * w,bottom: 16 * h),
+        margin: EdgeInsets.only(left: 16 * w, right: 16 * w, bottom: 16 * h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(
-            color: isSelected ? AppColor.blue : AppColor.light,
-            width: 2
+            color: borderColor,
+            width: 2,
           ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              data.name,
+              data.city,
               style: TextStyle(
                 fontFamily: AppColor.fontFamily,
                 fontWeight: FontWeight.w700,
@@ -52,22 +57,6 @@ class AddressWidget extends StatelessWidget {
                 height: 21 / 14,
                 letterSpacing: 0.5,
                 color: AppColor.dark,
-              ),
-            ),
-            SizedBox(
-              height: 16 * h,
-            ),
-            Expanded(
-              child: Text(
-                data.location,
-                style: TextStyle(
-                  fontFamily: AppColor.fontFamily,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12 * h,
-                  height: 21.6 / 12,
-                  letterSpacing: 0.5,
-                  color: AppColor.grey,
-                ),
               ),
             ),
             SizedBox(
@@ -96,9 +85,11 @@ class AddressWidget extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 24 * h,
-                      vertical: 16 * h,
+                      vertical: 8 * h,
                     ),
-                    color: AppColor.blue,
+                    decoration: BoxDecoration(
+                        color: AppColor.blue,
+                        borderRadius: BorderRadius.circular(4)),
                     child: Center(
                       child: Text(
                         'Edit',

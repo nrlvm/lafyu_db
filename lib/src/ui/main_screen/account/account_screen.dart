@@ -21,15 +21,13 @@ class _AccountScreenState extends State<AccountScreen> {
       appBar: AppBar(
         backgroundColor: AppColor.white,
         elevation: 1,
-        centerTitle: false,
+        centerTitle: true,
         title: Text(
           'Account',
           style: TextStyle(
             fontFamily: AppColor.fontFamily,
-            fontWeight: FontWeight.w700,
-            fontSize: 16 * h,
-            height: 24 / 16,
-            letterSpacing: 0.5,
+            fontWeight: FontWeight.w500,
+            fontSize: 20 * h,
             color: AppColor.dark,
           ),
         ),
@@ -47,9 +45,15 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               );
             },
-            child: const AccountWidget(pic: 'user.svg', text: 'Profile'),
+            child: const AccountWidget(
+              pic: 'user.svg',
+              text: 'Profile',
+            ),
           ),
-          const AccountWidget(pic: 'bag.svg', text: 'Order'),
+          const AccountWidget(
+            pic: 'bag.svg',
+            text: 'Order',
+          ),
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -64,7 +68,6 @@ class _AccountScreenState extends State<AccountScreen> {
               text: 'Address',
             ),
           ),
-          const AccountWidget(pic: 'card.svg', text: 'Payment'),
         ],
       ),
     );

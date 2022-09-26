@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lesson_11/src/model/card_model.dart';
 import 'package:lesson_11/src/model/http_result.dart';
+import 'package:lesson_11/src/model/save_order_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class ApiProvider {
   String baseUrl = "http://lafyuu.qtlms.uz/api/v1/";
@@ -88,7 +89,6 @@ class ApiProvider {
   }
 
   Future<HttpResult> getHomeSale() async {
-
     return _getRequest('${baseUrl}product?home_sale=true');
   }
 
@@ -121,6 +121,28 @@ class ApiProvider {
       'confirm_password': confirmPassword,
     };
     return _postRequest('${baseUrl}register', data);
+  }
+
+  /// post json list
+  Future<HttpResult> postOrder(
+    SaveOrderModel saveOrderModel,
+    List<CartModel> cartModel,
+  ) async {
+    List<Map<String, String>> productList = <Map<String, String>>[];
+    for (int i = 0; i < cartModel.length; i++) {
+      Map<String, String> value = {
+        "product_id": cartModel[i].id.toString(),
+        "count": cartModel[i].cardCount.toString(),
+      };
+      productList.add(value);
+    }
+    Map data = {
+      "products": productList,
+      "phone": saveOrderModel.phone,
+      "city": saveOrderModel.city,
+      "location": saveOrderModel.location,
+    };
+    return _postRequest('${baseUrl}order', jsonEncode(data));
   }
 
   Future<HttpResult> accept(String email, String smsCode) async {
