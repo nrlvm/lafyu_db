@@ -74,8 +74,8 @@ class _ReverseSearchScreenState extends State<ReverseSearchScreen> {
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
-                      print(lat);
-                      print(lon);
+                      // print(lat);
+                      // print(lon);
                     },
                     child: Container(
                       height: 56 * h,

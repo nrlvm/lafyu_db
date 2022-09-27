@@ -232,7 +232,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   await productBlock.saveFavorite(data);
                                 } else {
                                   await productBlock.deleteFavorite(data);
-                                  }
+                                }
                               },
                               child: data.isFavorite
                                   ? SvgPicture.asset(
@@ -684,27 +684,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 274 * h,
-                        width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                          padding: EdgeInsets.only(
-                            left: 16 * h,
-                          ),
-                          itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                FlashSaleWidget(data: data.products[index]),
-                                SizedBox(
-                                  width: 16 * w,
+                      data.products.isNotEmpty
+                          ? SizedBox(
+                              height: 274 * h,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(
+                                  left: 16 * h,
                                 ),
-                              ],
-                            );
-                          },
-                          itemCount: data.products.length,
-                          scrollDirection: Axis.horizontal,
-                        ),
-                      ),
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    children: [
+                                      FlashSaleWidget(
+                                          data: data.products[index]),
+                                      SizedBox(
+                                        width: 16 * w,
+                                      ),
+                                    ],
+                                  );
+                                },
+                                itemCount: data.products.length,
+                                scrollDirection: Axis.horizontal,
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
                 ),

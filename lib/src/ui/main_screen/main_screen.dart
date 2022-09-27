@@ -27,7 +27,12 @@ class _MainScreenState extends State<MainScreen> {
     double h = Utils.height(context);
     return Scaffold(
       body: [
-        const HomeScreen(),
+        HomeScreen(
+          change: (int id) {
+            _selectedIndex = id;
+            setState(() {});
+          },
+        ),
         const ExploreScreen(),
         const CartScreen(),
         const OfferScreenMain(),

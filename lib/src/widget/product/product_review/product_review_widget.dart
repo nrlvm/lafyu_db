@@ -24,10 +24,15 @@ class ProductReviewWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(48),
-                child: CustomNetworkImage(
-                  image: data.user.avatar,
+              SizedBox(
+                height: 48 * h,
+                width: 48 * h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(48),
+                  child: CustomNetworkImage(
+                    image: data.user.avatar,
+                    boxFit: BoxFit.contain,
+                  ),
                 ),
               ),
               SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/ui/main_screen/account/address/address_screen.dart';
+import 'package:lesson_11/src/ui/main_screen/account/order/order_screen.dart';
 import 'package:lesson_11/src/ui/main_screen/account/profile/profile_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/account/account_widget.dart';
@@ -50,9 +51,19 @@ class _AccountScreenState extends State<AccountScreen> {
               text: 'Profile',
             ),
           ),
-          const AccountWidget(
-            pic: 'bag.svg',
-            text: 'Order',
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const OrderScreen(),
+                ),
+              );
+            },
+            child: const AccountWidget(
+              pic: 'bag.svg',
+              text: 'Order',
+            ),
           ),
           GestureDetector(
             onTap: () {

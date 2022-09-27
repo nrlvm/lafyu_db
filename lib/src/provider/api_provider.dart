@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lesson_11/src/model/card_model.dart';
 import 'package:lesson_11/src/model/http_result.dart';
-import 'package:lesson_11/src/model/save_order_model.dart';
+import 'package:lesson_11/src/model/send/send_order_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiProvider {
@@ -27,6 +26,7 @@ class ApiProvider {
   Future<HttpResult> _postRequest(String url, body) async {
     // print(url);
     // print(body);
+    // print(await _header());
     http.Response response = await http.post(
       Uri.parse(url),
       body: body,
@@ -68,8 +68,17 @@ class ApiProvider {
     } else {
       return {
         "Authorization": "Bearer $token",
+        'Content-Type': 'application/json; charset=UTF-8',
       };
     }
+  }
+  
+  Future<HttpResult> getCategoryProducts(int id)async{
+    return _getRequest('${baseUrl}product/?category=$id');
+  }
+
+  Future<HttpResult> getOrders() async {
+    return _getRequest("${baseUrl}Orders");
   }
 
   Future<HttpResult> getSuperFlash() {
@@ -125,24 +134,9 @@ class ApiProvider {
 
   /// post json list
   Future<HttpResult> postOrder(
-    SaveOrderModel saveOrderModel,
-    List<CartModel> cartModel,
+    SendOrderModel saveOrderModel,
   ) async {
-    List<Map<String, String>> productList = <Map<String, String>>[];
-    for (int i = 0; i < cartModel.length; i++) {
-      Map<String, String> value = {
-        "product_id": cartModel[i].id.toString(),
-        "count": cartModel[i].cardCount.toString(),
-      };
-      productList.add(value);
-    }
-    Map data = {
-      "products": productList,
-      "phone": saveOrderModel.phone,
-      "city": saveOrderModel.city,
-      "location": saveOrderModel.location,
-    };
-    return _postRequest('${baseUrl}order', jsonEncode(data));
+    return _postRequest('${baseUrl}order', json.encode(saveOrderModel));
   }
 
   Future<HttpResult> accept(String email, String smsCode) async {

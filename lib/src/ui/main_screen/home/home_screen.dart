@@ -8,6 +8,7 @@ import 'package:lesson_11/src/model/home_model.dart';
 import 'package:lesson_11/src/model/super_flash_model.dart';
 import 'package:lesson_11/src/ui/main_screen/favorite/favorite_screen.dart';
 import 'package:lesson_11/src/ui/main_screen/home/offer_screen.dart';
+import 'package:lesson_11/src/ui/main_screen/home/products_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/category/category_widget.dart';
 import 'package:lesson_11/src/widget/flash_sale/flash_sale_widget.dart';
@@ -19,8 +20,11 @@ import 'package:lesson_11/src/widget/shimmer/home/home_sale_shimmer.dart';
 import 'package:lesson_11/src/widget/super_flash_sale/super_flash_widget.dart';
 
 class HomeScreen extends StatefulWidget {
+  final Function(int id) change;
+
   const HomeScreen({
     Key? key,
+    required this.change,
   }) : super(key: key);
 
   @override
@@ -212,15 +216,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        'More Category',
-                        style: TextStyle(
-                          fontFamily: AppColor.fontFamily,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14 * h,
-                          height: 21 / 14,
-                          letterSpacing: 0.5,
-                          color: AppColor.blue,
+                      GestureDetector(
+                        onTap: (){
+                          widget.change(1);
+                        },
+                        child: Text(
+                          'More Category',
+                          style: TextStyle(
+                            fontFamily: AppColor.fontFamily,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14 * h,
+                            height: 21 / 14,
+                            letterSpacing: 0.5,
+                            color: AppColor.blue,
+                          ),
                         ),
                       ),
                     ],
@@ -262,15 +271,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        'See More',
-                        style: TextStyle(
-                          fontFamily: AppColor.fontFamily,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14 * h,
-                          height: 21 / 14,
-                          letterSpacing: 0.5,
-                          color: AppColor.blue,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductsScreen(
+                                title: "Flash Sale",
+                                type: flashSaleModel.results,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'See More',
+                          style: TextStyle(
+                            fontFamily: AppColor.fontFamily,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14 * h,
+                            height: 21 / 14,
+                            letterSpacing: 0.5,
+                            color: AppColor.blue,
+                          ),
                         ),
                       )
                     ],
@@ -315,15 +337,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        'See More',
-                        style: TextStyle(
-                          fontFamily: AppColor.fontFamily,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14 * h,
-                          height: 21 / 14,
-                          letterSpacing: 0.5,
-                          color: AppColor.blue,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductsScreen(
+                                title: 'Mega Sale',
+                                type: megaSaleModel.results,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'See More',
+                          style: TextStyle(
+                            fontFamily: AppColor.fontFamily,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14 * h,
+                            height: 21 / 14,
+                            letterSpacing: 0.5,
+                            color: AppColor.blue,
+                          ),
                         ),
                       )
                     ],

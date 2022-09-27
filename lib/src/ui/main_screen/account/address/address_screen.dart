@@ -7,7 +7,7 @@ import 'package:lesson_11/src/bloc/cart_bloc.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/address_model.dart';
 import 'package:lesson_11/src/model/card_model.dart';
-import 'package:lesson_11/src/model/save_order_model.dart';
+import 'package:lesson_11/src/model/send/send_order_model.dart';
 import 'package:lesson_11/src/provider/api_provider.dart';
 import 'package:lesson_11/src/ui/main_screen/account/address/add_address_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
@@ -145,22 +145,21 @@ class _AddressesScreenState extends State<AddressesScreen> {
                     if (widget.card &&
                         selectedIndex != -1 &&
                         widget.cartModel != null) {
-                      List<Product> products = [];
+                      List<SendOrderProduct> products = [];
                       for (int i = 0; i < widget.cartModel!.length; i++) {
-                        Product pr = Product(
+                        SendOrderProduct pr = SendOrderProduct(
                           productId: widget.cartModel![i].id,
                           count: widget.cartModel![i].cardCount,
                         );
                         products.add(pr);
                       }
                       await ApiProvider().postOrder(
-                        SaveOrderModel(
+                        SendOrderModel(
                           products: products,
                           phone: data[selectedIndex].pNumber,
                           city: data[selectedIndex].city,
                           location: data[selectedIndex].location,
                         ),
-                        widget.cartModel!,
                       );
                       cartBloc.clearCart();
                       Navigator.pop(this.context);
