@@ -113,7 +113,7 @@ class Review {
   User user;
   String text;
   DateTime date;
-  dynamic images;
+  String images;
   int start;
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
@@ -124,7 +124,7 @@ class Review {
         date: json["date"] == null
             ? DateTime.now()
             : DateTime.parse(json["date"]),
-        images: json["images"] ?? 0,
+        images: json["images"] ?? "",
         start: json["start"] ?? 0,
       );
 }

@@ -33,34 +33,31 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       appBar: AppBar(
         backgroundColor: AppColor.white,
         automaticallyImplyLeading: false,
-        elevation: 1,
-        centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset(
-                'assets/icons/left.svg',
-              ),
+        elevation: 0.5,
+        centerTitle: true,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            color: Colors.transparent,
+            child: SvgPicture.asset(
+              'assets/icons/left.svg',
+              fit: BoxFit.none,
             ),
-            SizedBox(
-              width: 12 * w,
-            ),
-            Text(
-              'Favorite Product',
-              // textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: AppColor.fontFamily,
-                fontWeight: FontWeight.w700,
-                fontSize: 16 * h,
-                height: 24 / 16,
-                letterSpacing: 0.5,
-                color: AppColor.dark,
-              ),
-            ),
-          ],
+          ),
+        ),
+        title:  Text(
+          'Favorite Product',
+          // textAlign: TextAlign.left,
+          style: TextStyle(
+            fontFamily: AppColor.fontFamily,
+            fontWeight: FontWeight.w700,
+            fontSize: 16 * h,
+            height: 24 / 16,
+            letterSpacing: 0.5,
+            color: AppColor.dark,
+          ),
         ),
       ),
       body: StreamBuilder<List<FavoriteModel>>(

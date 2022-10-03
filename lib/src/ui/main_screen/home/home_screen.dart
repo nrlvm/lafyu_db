@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const Spacer(),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           widget.change(1);
                         },
                         child: Text(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/product_detail_model.dart';
+import 'package:lesson_11/src/utils/date.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 
@@ -14,6 +15,10 @@ class ProductReviewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double h = Utils.height(context);
     double w = Utils.width(context);
+    int imageCount = 0;
+    for (int i = 0; i < data.images.length; i++) {
+      imageCount++;
+    }
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16 * w),
       child: Column(
@@ -127,7 +132,7 @@ class ProductReviewWidget extends StatelessWidget {
               color: AppColor.grey,
             ),
           ),
-          data.images == 0
+          imageCount == 0
               ? SizedBox(
                   height: 16 * h,
                 )
@@ -151,11 +156,13 @@ class ProductReviewWidget extends StatelessWidget {
                         ],
                       );
                     },
-                    itemCount: data.images,
+                    itemCount: imageCount,
                   ),
                 ),
           Text(
-            '${data.date.day} ${data.date.month} ${data.date.year}',
+            // '${data.date.day} ${data.date.month} ${data.date.year}',
+            // '${dateUtil(data.date.day)} ${dateUtil(data.date.month)} ${dateUtil(data.date.year)}',
+            DateUtil.setDate(data.date),
             style: TextStyle(
               fontFamily: AppColor.fontFamily,
               fontWeight: FontWeight.w400,

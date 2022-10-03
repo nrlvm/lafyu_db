@@ -101,9 +101,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                     onDateChanged: (newDate) {
                       // bday =
                       //     '${newDate.day.toString()} ${newDate.month.toString()} ${newDate.year.toString()}';
-                      bday =
-                          "${dateUtil(newDate.day)} ${dateUtil(newDate.month)} ${dateUtil(newDate.year)}";
-
+                      // bday =
+                      //     "${dateUtil(newDate.day)} ${dateUtil(newDate.month)} ${dateUtil(newDate.year)}";
+                      bday = DateUtil.setDate(newDate);
                       setState(() {});
                     },
                   ),

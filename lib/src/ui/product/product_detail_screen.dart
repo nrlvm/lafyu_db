@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lesson_11/src/bloc/product_block.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/product_detail_model.dart';
+import 'package:lesson_11/src/ui/review/review_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/app/custom_network_image.dart';
 import 'package:lesson_11/src/widget/flash_sale/flash_sale_widget.dart';
@@ -551,15 +552,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ),
                             const Spacer(),
-                            Text(
-                              'See More',
-                              style: TextStyle(
-                                fontFamily: AppColor.fontFamily,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14 * h,
-                                height: 21 / 14,
-                                letterSpacing: 0.5,
-                                color: AppColor.blue,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ReviewScreen(
+                                      id: data.id,
+                                    ),
+                                  ),
+                                );
+                                print(data.id);
+                              },
+                              child: Text(
+                                'See More',
+                                style: TextStyle(
+                                  fontFamily: AppColor.fontFamily,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14 * h,
+                                  height: 21 / 14,
+                                  letterSpacing: 0.5,
+                                  color: AppColor.blue,
+                                ),
                               ),
                             )
                           ],

@@ -14,13 +14,7 @@ class ApiProvider {
       headers: await _header(),
     );
     // print(response.body);
-    return HttpResult(
-      statusCode: response.statusCode,
-      isSuccess: response.statusCode >= 200 && response.statusCode < 300,
-      result: jsonDecode(
-        response.body,
-      ),
-    );
+    return _result(response);
   }
 
   Future<HttpResult> _postRequest(String url, body) async {
@@ -33,13 +27,7 @@ class ApiProvider {
       headers: await _header(),
     );
     // print(response.body);
-    return HttpResult(
-      statusCode: response.statusCode,
-      isSuccess: response.statusCode >= 200 && response.statusCode < 300,
-      result: jsonDecode(
-        response.body,
-      ),
-    );
+    return _result(response);
   }
 
   Future<HttpResult> _putRequest(String url, body) async {
@@ -51,12 +39,14 @@ class ApiProvider {
       headers: await _header(),
     );
     // print(response.body);
+    return _result(response);
+  }
+
+  HttpResult _result(http.Response response) {
     return HttpResult(
       statusCode: response.statusCode,
       isSuccess: response.statusCode >= 200 && response.statusCode < 300,
-      result: jsonDecode(
-        response.body,
-      ),
+      result: json.decode(utf8.decode(response.bodyBytes)),
     );
   }
 
@@ -72,9 +62,13 @@ class ApiProvider {
       };
     }
   }
-  
-  Future<HttpResult> getCategoryProducts(int id)async{
+
+  Future<HttpResult> getCategoryProducts(int id) async {
     return _getRequest('${baseUrl}product/?category=$id');
+  }
+
+  Future<HttpResult> getReviews(int id) async {
+    return _getRequest('${baseUrl}reviews?propducts=$id');
   }
 
   Future<HttpResult> getOrders() async {
@@ -133,10 +127,22 @@ class ApiProvider {
   }
 
   /// post json list
-  Future<HttpResult> postOrder(
-    SendOrderModel saveOrderModel,
-  ) async {
+  Future<HttpResult> postOrder(SendOrderModel saveOrderModel) async {
     return _postRequest('${baseUrl}order', json.encode(saveOrderModel));
+  }
+
+  ///post review
+  Future<HttpResult> postReview(
+    int productId,
+    int starCount,
+    String text,
+  ) async {
+    var data = {
+      "start": starCount,
+      "text": text,
+      "propducts": productId,
+    };
+    return _postRequest('${baseUrl}add_reviews', jsonEncode(data));
   }
 
   Future<HttpResult> accept(String email, String smsCode) async {
