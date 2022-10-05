@@ -24,7 +24,8 @@ class _GenderScreenState extends State<GenderScreen> {
 
   @override
   void initState() {
-    profileBlock.allGender('select gender');
+    // profileBlock.allGender('select gender');
+    profileBlock.allProfile();
     super.initState();
   }
 
@@ -67,141 +68,142 @@ class _GenderScreenState extends State<GenderScreen> {
         ),
       ),
       body: StreamBuilder<ProfileModel>(
-          stream: profileBlock.getGender,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              ProfileModel data = snapshot.data!;
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16 * w,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 16 * h,
+        stream: profileBlock.getProfile,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            ProfileModel data = snapshot.data!;
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16 * w,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 16 * h,
+                  ),
+                  Text(
+                    'Choose Gender',
+                    style: TextStyle(
+                      fontFamily: AppColor.fontFamily,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14 * h,
+                      height: 21 / 14,
+                      letterSpacing: 0.5,
+                      color: AppColor.dark,
                     ),
-                    Text(
-                      'Choose Gender',
-                      style: TextStyle(
-                        fontFamily: AppColor.fontFamily,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14 * h,
-                        height: 21 / 14,
-                        letterSpacing: 0.5,
-                        color: AppColor.dark,
+                  ),
+                  SizedBox(
+                    height: 12 * h,
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    height: 56 * h,
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16 * w,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: AppColor.light,
+                        width: 1,
                       ),
                     ),
-                    SizedBox(
-                      height: 12 * h,
+                    child: DropdownButton(
+                      hint: Text(
+                        dropdownvalue,
+                        style: TextStyle(
+                          fontFamily: AppColor.fontFamily,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12 * h,
+                          height: 21.6 / 12,
+                          letterSpacing: 0.5,
+                          color: AppColor.grey,
+                        ),
+                      ),
+                      isExpanded: true,
+                      autofocus: true,
+                      underline: const SizedBox(),
+                      focusColor: AppColor.blue,
+                      items: items.map(
+                        (String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(
+                              items,
+                              style: TextStyle(
+                                fontFamily: AppColor.fontFamily,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12 * h,
+                                height: 21.6 / 12,
+                                letterSpacing: 0.5,
+                                color: AppColor.grey,
+                              ),
+                            ),
+                          );
+                        },
+                      ).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownvalue = newValue!;
+                        });
+                      },
                     ),
-                    Container(
-                      alignment: Alignment.centerLeft,
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () async {
+                      data.user.gender = dropdownvalue;
+                      await ApiProvider().setGender(data.user.gender);
+                      Navigator.pop(this.context);
+                    },
+                    child: Container(
                       height: 56 * h,
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16 * w,
-                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: AppColor.light,
-                          width: 1,
-                        ),
+                        color: AppColor.blue,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 30,
+                            offset: const Offset(0, 10),
+                            color: AppColor.blue.withOpacity(0.24),
+                          )
+                        ],
                       ),
-                      child: DropdownButton(
-                        hint: Text(
-                          dropdownvalue,
+                      child: Center(
+                        child: Text(
+                          'Save',
                           style: TextStyle(
                             fontFamily: AppColor.fontFamily,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12 * h,
-                            height: 21.6 / 12,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14 * h,
+                            height: 25 / 14,
                             letterSpacing: 0.5,
-                            color: AppColor.grey,
-                          ),
-                        ),
-                        isExpanded: true,
-                        autofocus: true,
-                        underline: const SizedBox(),
-                        focusColor: AppColor.blue,
-                        items: items.map(
-                          (String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(
-                                items,
-                                style: TextStyle(
-                                  fontFamily: AppColor.fontFamily,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12 * h,
-                                  height: 21.6 / 12,
-                                  letterSpacing: 0.5,
-                                  color: AppColor.grey,
-                                ),
-                              ),
-                            );
-                          },
-                        ).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
-                          });
-                        },
-                      ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () async {
-                        data.user.gender = dropdownvalue;
-                        await ApiProvider().setGender(data.user.gender);
-                        Navigator.pop(this.context);
-                      },
-                      child: Container(
-                        height: 56 * h,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColor.blue,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 30,
-                              offset: const Offset(0, 10),
-                              color: AppColor.blue.withOpacity(0.24),
-                            )
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Save',
-                            style: TextStyle(
-                              fontFamily: AppColor.fontFamily,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14 * h,
-                              height: 25 / 14,
-                              letterSpacing: 0.5,
-                              color: AppColor.white,
-                            ),
+                            color: AppColor.white,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 50 * h,
-                    ),
-                  ],
-                ),
-              );
-            }
-            return Column(
-              children: [
-                SizedBox(
-                  height: 16 * h,
-                ),
-                const GenderShimmer(),
-              ],
+                  ),
+                  SizedBox(
+                    height: 50 * h,
+                  ),
+                ],
+              ),
             );
-          }),
+          }
+          return Column(
+            children: [
+              SizedBox(
+                height: 16 * h,
+              ),
+              const GenderShimmer(),
+            ],
+          );
+        },
+      ),
     );
   }
 }

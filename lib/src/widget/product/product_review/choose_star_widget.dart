@@ -23,7 +23,6 @@ class ChooseStarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int chosenStar = 4;
     double h = Utils.height(context);
     double w = Utils.width(context);
     return Row(

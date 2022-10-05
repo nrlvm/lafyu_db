@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.lesson_11">
+    package="uz.nazirov.buy">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
@@ -23,6 +23,10 @@
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+            <meta-data
+                android:name="io.flutter.embedding.android.SplashScreen"
+                android:resource="@drawable/launch_background" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

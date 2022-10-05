@@ -117,6 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context) {
                                 return OfferScreen(
                                   id: superFlashModel.results[index].id,
+                                  data: superFlashModel.results[index].product,
+                                  superFlashModelResult:
+                                      superFlashModel.results[index],
                                 );
                               },
                             ),
@@ -399,6 +402,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context) {
                                 return OfferScreen(
                                   id: superFlashModel.results[index].id,
+                                  data: superFlashModel.results[index].product,
+                                  superFlashModelResult:
+                                      superFlashModel.results[index],
                                 );
                               },
                             ),

@@ -562,7 +562,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     ),
                                   ),
                                 );
-                                print(data.id);
                               },
                               child: Text(
                                 'See More',

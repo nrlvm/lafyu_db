@@ -23,7 +23,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
 
   @override
   void initState() {
-    profileBlock.allBirthday('00-00-2000');
+    profileBlock.allProfile();
     super.initState();
   }
 
@@ -66,7 +66,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
         ),
       ),
       body: StreamBuilder<ProfileModel>(
-        stream: profileBlock.getBirthday,
+        stream: profileBlock.getProfile,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             ProfileModel data = snapshot.data!;
@@ -111,7 +111,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                   GestureDetector(
                     onTap: () {
                       data.user.birthDate = bday;
-                      ApiProvider().setBirthday(data.user.birthDate);
+                      ApiProvider().setBirthday(bday);
                       Navigator.pop(context);
                     },
                     child: Container(

@@ -20,10 +20,9 @@ class _ChangeNameScreenState extends State<ChangeNameScreen> {
 
   @override
   void initState() {
-    profileBlock.allFlName('','');
+    profileBlock.allProfile();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     double h = Utils.height(context);
@@ -61,7 +60,7 @@ class _ChangeNameScreenState extends State<ChangeNameScreen> {
         ),
       ),
       body: StreamBuilder<ProfileModel>(
-        stream: profileBlock.getFlName,
+        stream: profileBlock.getProfile,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             ProfileModel data = snapshot.data!;

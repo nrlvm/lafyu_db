@@ -7,7 +7,6 @@ import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/cart/cart_widget.dart';
 import 'package:lesson_11/src/widget/shimmer/product/screen_shimmer.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -23,13 +22,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     cartBloc.allCart();
-    getToken();
     super.initState();
-  }
-
-  getToken()async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getString('token'));
   }
   @override
   Widget build(BuildContext context) {

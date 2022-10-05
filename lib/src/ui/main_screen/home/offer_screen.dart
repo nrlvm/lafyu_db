@@ -7,14 +7,19 @@ import 'package:lesson_11/src/model/super_flash_model.dart';
 import 'package:lesson_11/src/provider/api_provider.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/home_sale/home_sale_widget.dart';
+import 'package:lesson_11/src/widget/shimmer/product/screen_shimmer.dart';
 import 'package:lesson_11/src/widget/super_flash_sale/super_flash_widget.dart';
 
 class OfferScreen extends StatefulWidget {
   final int id;
+  final List<FlashSaleResult> data;
+  final SuperFlashModelResult superFlashModelResult;
 
   const OfferScreen({
     Key? key,
     required this.id,
+    required this.data,
+    required this.superFlashModelResult,
   }) : super(key: key);
 
   @override
@@ -22,18 +27,7 @@ class OfferScreen extends StatefulWidget {
 }
 
 class _OfferScreenState extends State<OfferScreen> {
-  SuperFlashModelResult superFlashResult = SuperFlashModelResult.fromJson({});
-  FlashSaleModel homeSaleResult = FlashSaleModel.fromJson({});
-  final int _gridcount = 2;
-
-  ApiProvider apiProvider = ApiProvider();
-
-  @override
-  initState() {
-    homeBlock.allSuperFlashById(widget.id);
-    homeBlock.allHomeData();
-    super.initState();
-  }
+  final int _gridCount = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +73,7 @@ class _OfferScreenState extends State<OfferScreen> {
             height: 16 * h,
           ),
           SuperFlashWidget(
-            data: SuperFlashModelResult(
-              id: superFlashResult.id,
-              endDate: superFlashResult.endDate,
-              image: superFlashResult.image,
-              name: superFlashResult.name,
-              percent: superFlashResult.percent,
-              product: superFlashResult.product,
-            ),
+            data: widget.superFlashModelResult,
           ),
           SizedBox(
             height: 16 * h,
@@ -100,17 +87,21 @@ class _OfferScreenState extends State<OfferScreen> {
                     Row(
                       children: [
                         Expanded(
-                          child: HomeSaleWidget(
-                            data: superFlashResult.product[index * _gridcount],
-                          ),
+                          child: index * _gridCount + 1 >= widget.data.length
+                              ? Container()
+                              : HomeSaleWidget(
+                                  data: widget.data[index * _gridCount],
+                                ),
                         ),
                         SizedBox(
                           width: 13 * w,
                         ),
                         Expanded(
-                          child: HomeSaleWidget(
-                            data: superFlashResult.product[index * _gridcount + 1]
-                          ),
+                          child: index * _gridCount + 1 >= widget.data.length
+                              ? Container()
+                              : HomeSaleWidget(
+                                  data: widget.data[index * _gridCount + 1],
+                                ),
                         ),
                       ],
                     ),
@@ -123,7 +114,7 @@ class _OfferScreenState extends State<OfferScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16 * w),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: superFlashResult.product.length ~/ 2,
+              itemCount: (widget.data.length + _gridCount - 1) ~/ _gridCount,
             ),
           )
         ],

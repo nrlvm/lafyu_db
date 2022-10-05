@@ -161,19 +161,19 @@ class ApiProvider {
     var data = {
       'gender': gender,
     };
-    return _putRequest('${baseUrl}profil', data);
+    return _putRequest('${baseUrl}profil', jsonEncode(data));
   }
 
   Future<HttpResult> setBirthday(String bday) async {
     var data = {
       'birth_date': bday,
     };
-    return _putRequest('${baseUrl}profil', data);
+    return _putRequest('${baseUrl}profil', jsonEncode(data));
   }
 
   Future<HttpResult> setPhoneNumber(String number) async {
     var data = {'Number': number};
-    return _putRequest('${baseUrl}profil', data);
+    return _putRequest('${baseUrl}profil', jsonEncode(data));
   }
 
   Future<HttpResult> setName(String fn, String ln) async {
@@ -181,6 +181,6 @@ class ApiProvider {
       'first_name': fn,
       'last_name': ln,
     };
-    return _putRequest('${baseUrl}profil', data);
+    return _putRequest('${baseUrl}profil', jsonEncode(data));
   }
 }

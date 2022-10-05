@@ -15,7 +15,6 @@ class OfferScreenMain extends StatefulWidget {
 }
 
 class _OfferScreenMainState extends State<OfferScreenMain> {
-
   @override
   void initState() {
     offerBloc.allOffers();
@@ -58,6 +57,7 @@ class _OfferScreenMainState extends State<OfferScreenMain> {
                         MaterialPageRoute(
                           builder: (context) => OfferScreen(
                             id: data[index].id,
+                            data: data[index].product, superFlashModelResult: data[index],
                           ),
                         ),
                       );

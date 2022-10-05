@@ -19,7 +19,8 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
   @override
   void initState() {
-    profileBlock.allPhoneNumber('ProfileModel().user.number)');
+    // profileBlock.allPhoneNumber('ProfileModel().user.number)');
+    profileBlock.allProfile();
     super.initState();
   }
 
@@ -60,10 +61,11 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
         ),
       ),
       body: StreamBuilder<ProfileModel>(
-        stream: profileBlock.getFlName,
+        stream: profileBlock.getProfile,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             ProfileModel data = snapshot.data!;
+            _controller.text = data.user.number;
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 16 * w),
               child: Column(

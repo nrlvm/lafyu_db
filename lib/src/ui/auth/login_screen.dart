@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 16 * h,
             ),
             Text(
-              'Welcome to Lafyuu',
+              'Welcome to Click to Buy',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: AppColor.fontFamily,

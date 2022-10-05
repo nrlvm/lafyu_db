@@ -10,11 +10,10 @@ class HomeBlock {
   final ApiProvider _apiProvider = ApiProvider();
 
   final _fetchHome = PublishSubject<HomeModel>();
-  final _fetchSuperFlashById = PublishSubject<HomeModel>();
+  final _fetchSuperFlashById = PublishSubject<SuperFlashModel>();
 
   Stream<HomeModel> get getHome => _fetchHome.stream;
-
-  Stream<HomeModel> get getSuperFlash => _fetchSuperFlashById.stream;
+  Stream<SuperFlashModel> get getSuperFlash => _fetchSuperFlashById.stream;
 
   allHomeData() async {
     HomeModel homeModel = HomeModel(
@@ -79,6 +78,15 @@ class HomeBlock {
       _fetchSuperFlashById.sink.add(
         allSuperFlashById(id),
       );
+    }
+  }
+
+  searchSuperFlashSaleID(int id) async {
+    HttpResult responseSFI = await _apiProvider.getSuperFlashById(id);
+    if (responseSFI.isSuccess) {
+      SuperFlashModel superFlashModelData =
+          SuperFlashModel.fromJson(responseSFI.result);
+      _fetchSuperFlashById.sink.add(superFlashModelData);
     }
   }
 }

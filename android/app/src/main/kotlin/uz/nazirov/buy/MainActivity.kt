@@ -1,4 +1,4 @@
-package com.example.lesson_11
+package uz.nazirov.buy
 
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity

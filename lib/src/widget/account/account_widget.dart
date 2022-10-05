@@ -20,6 +20,7 @@ class AccountWidget extends StatelessWidget {
     return Container(
       height: 56 * h,
       width: MediaQuery.of(context).size.width,
+      color: Colors.transparent,
       padding: EdgeInsets.symmetric(
         horizontal: 16 * h,
       ),

@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lesson_11/src/bloc/review_bloc.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
-import 'package:lesson_11/src/model/http_result.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/product/product_review/choose_star_widget.dart';
 
