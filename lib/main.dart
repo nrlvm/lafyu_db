@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: token != "" ? const MainScreen() : const LoginScreen(),
-      // home: const MainScreen(),
     );
   }
 }

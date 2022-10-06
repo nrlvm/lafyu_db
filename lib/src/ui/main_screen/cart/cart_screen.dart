@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:lesson_11/src/bloc/cart_bloc.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/card_model.dart';
+import 'package:lesson_11/src/ui/auth/login_screen.dart';
 import 'package:lesson_11/src/ui/main_screen/account/address/address_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:lesson_11/src/widget/cart/cart_widget.dart';
 import 'package:lesson_11/src/widget/shimmer/product/screen_shimmer.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class _CartScreenState extends State<CartScreen> {
     cartBloc.allCart();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     double h = Utils.height(context);
@@ -224,15 +227,29 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddressesScreen(
-                                card: true,
-                                cartModel: data,
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          String token = prefs.getString('token') ?? "";
+                          if (token == "") {
+                            Navigator.popUntil(
+                                this.context, (route) => route.isFirst);
+                            Navigator.pushReplacement(
+                              this.context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
                               ),
-                            ),
-                          );
+                            );
+                          } else {
+                            Navigator.push(
+                              this.context,
+                              MaterialPageRoute(
+                                builder: (context) => AddressesScreen(
+                                  card: true,
+                                  cartModel: data,
+                                ),
+                              ),
+                            );
+                          }
                         },
                         child: Container(
                           height: 56 * h,
@@ -274,7 +291,7 @@ class _CartScreenState extends State<CartScreen> {
                     child: Center(
                       child: Lottie.asset(
                         'assets/lottie/cart.json',
-
+                        frameRate: FrameRate(60),
                       ),
                     ),
                   );

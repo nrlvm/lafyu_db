@@ -9,6 +9,7 @@ import 'package:lesson_11/src/ui/auth/register_screen.dart';
 import 'package:lesson_11/src/ui/main_screen/main_screen.dart';
 import 'package:lesson_11/src/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,18 +21,46 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
+  bool privacy = false;
 
   @override
   Widget build(BuildContext context) {
     double h = Utils.height(context);
     double w = Utils.width(context);
     return Scaffold(
+      backgroundColor: AppColor.white,
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16 * h),
-        child: ListView(
+        child: Column(
           children: [
-            SizedBox(
-              height: 50 * h,
+            Container(
+              height: 120 * h,
+              padding: EdgeInsets.only(
+                top: 56 * h,
+              ),
+              alignment: Alignment.topRight,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const MainScreen();
+                      },
+                    ),
+                  );
+                },
+                child: Text(
+                  "Next",
+                  style: TextStyle(
+                    fontFamily: AppColor.fontFamily,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16 * h,
+                    color: AppColor.grey,
+                  ),
+                ),
+              ),
             ),
             Center(
               child: SvgPicture.asset(
@@ -173,35 +202,128 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 16 * h,
             ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      privacy = !privacy;
+                    });
+                  },
+                  child: AnimatedContainer(
+                    height: 18 * h,
+                    width: 18 * h,
+                    padding: EdgeInsets.all(2 * h),
+                    curve: Curves.easeInOut,
+                    duration: const Duration(milliseconds: 370),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: privacy ? AppColor.blue : AppColor.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: SvgPicture.asset(
+                      "assets/icons/check.svg",
+                      color: privacy ? AppColor.blue : AppColor.white,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8 * w),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      String url = 'https://api.osonapteka.uz/privacy';
+                      if (!await launchUrl(Uri.parse(url))) {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'I have read and accept ',
+                              style: TextStyle(
+                                fontFamily: AppColor.fontFamily,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12 * h,
+                                color: AppColor.grey,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'privacy policy ',
+                              style: TextStyle(
+                                fontFamily: AppColor.fontFamily,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12 * h,
+                                color: AppColor.blue,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'and',
+                              style: TextStyle(
+                                fontFamily: AppColor.fontFamily,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12 * h,
+                                color: AppColor.grey,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' terms of use',
+                              style: TextStyle(
+                                fontFamily: AppColor.fontFamily,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12 * h,
+                                color: AppColor.blue,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
             GestureDetector(
               onTap: () async {
-                HttpResult response = await ApiProvider().login(
-                  _controller1.text,
-                  _controller2.text,
-                );
-                if (response.isSuccess) {
-                  LoginModel data = LoginModel.fromJson(response.result);
-                  if (data.status != 1) {
+                if (privacy) {
+                  HttpResult response = await ApiProvider().login(
+                    _controller1.text,
+                    _controller2.text,
+                  );
+                  if (response.isSuccess) {
+                    LoginModel data = LoginModel.fromJson(response.result);
+                    if (data.status != 1) {
+                      CenterDialog.showErrorDialog(
+                        this.context,
+                        data.msg,
+                      );
+                    }
+                    if (data.status == 1) {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('token', data.token);
+                      Navigator.of(this.context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => const MainScreen(),
+                        ),
+                        (Route<dynamic> route) => false,
+                      );
+                    }
+                  } else {
                     CenterDialog.showErrorDialog(
                       this.context,
-                      data.msg,
+                      "Xatolik yuz berdi",
                     );
                   }
-                  if (data.status == 1) {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.setString('token', data.token);
-                    Navigator.of(this.context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (context) => const MainScreen(),
-                      ),
-                      (Route<dynamic> route) => false,
-                    );
-                  }
-                } else {
+                }else{
                   CenterDialog.showErrorDialog(
                     this.context,
-                    "Xatolik yuz berdi",
+                    "Not selected",
                   );
                 }
               },
@@ -234,129 +356,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20 * h,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 2,
-                    color: AppColor.light,
-                  ),
-                ),
-                SizedBox(
-                  width: 28 * w,
-                ),
-                Text(
-                  'OR',
-                  style: TextStyle(
-                    fontFamily: AppColor.fontFamily,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14 * h,
-                    height: 21 / 14,
-                    letterSpacing: 0.5,
-                    color: AppColor.grey,
-                  ),
-                ),
-                SizedBox(
-                  width: 28 * w,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 2,
-                    color: AppColor.light,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 16 * h,
-            ),
-            Container(
-              height: 56 * h,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 16 * w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                  color: AppColor.light,
+            const Spacer(),
+            GestureDetector(
+              onTap: () async {
+                // String url = "shahvozd@hhsdc.com";
+                // if (!await launchUrl(
+                //   Uri(
+                //     scheme: 'mailto',
+                //     path: url,
+                //   ),
+                // )) {
+                //   throw 'Could not launch $url';
+                // }
+              },
+              child: Text(
+                'Forgot Password?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppColor.fontFamily,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12 * h,
+                  height: 18 / 12,
+                  letterSpacing: 0.5,
+                  color: AppColor.blue,
                 ),
               ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/google.svg',
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Login with Google',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: AppColor.fontFamily,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14 * h,
-                        height: 25.2 / 14,
-                        letterSpacing: 0.5,
-                        color: AppColor.grey,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 8 * h,
-            ),
-            Container(
-              height: 56 * h,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 16 * w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                  color: AppColor.light,
-                ),
-              ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/facebook.svg',
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Login with Facebook',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: AppColor.fontFamily,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14 * h,
-                        height: 25.2 / 14,
-                        letterSpacing: 0.5,
-                        color: AppColor.grey,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 16 * h,
-            ),
-            Text(
-              'Forgot Password?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: AppColor.fontFamily,
-                fontWeight: FontWeight.w700,
-                fontSize: 12 * h,
-                height: 18 / 12,
-                letterSpacing: 0.5,
-                color: AppColor.blue,
-              ),
-            ),
-            SizedBox(
-              height: 8 * h,
             ),
             GestureDetector(
               onTap: () {
@@ -369,32 +393,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 );
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Don’t have a account? ',
-                    style: TextStyle(
-                      fontFamily: AppColor.fontFamily,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12 * h,
-                      height: 18 / 12,
-                      letterSpacing: 0.5,
-                      color: AppColor.grey,
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 8 * h),
+                color: Colors.transparent,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Don’t have a account? ',
+                      style: TextStyle(
+                        fontFamily: AppColor.fontFamily,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12 * h,
+                        height: 18 / 12,
+                        letterSpacing: 0.5,
+                        color: AppColor.grey,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Register',
-                    style: TextStyle(
-                      fontFamily: AppColor.fontFamily,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12 * h,
-                      height: 18 / 12,
-                      letterSpacing: 0.5,
-                      color: AppColor.blue,
+                    Text(
+                      'Register',
+                      style: TextStyle(
+                        fontFamily: AppColor.fontFamily,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12 * h,
+                        height: 18 / 12,
+                        letterSpacing: 0.5,
+                        color: AppColor.blue,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SizedBox(
