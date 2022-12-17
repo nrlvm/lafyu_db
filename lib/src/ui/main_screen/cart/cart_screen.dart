@@ -291,7 +291,7 @@ class _CartScreenState extends State<CartScreen> {
                     child: Center(
                       child: Lottie.asset(
                         'assets/lottie/cart.json',
-                        frameRate: FrameRate(60),
+                        frameRate: FrameRate(200),
                       ),
                     ),
                   );

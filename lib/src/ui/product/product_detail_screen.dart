@@ -730,6 +730,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 data.cardCount == 0
                     ? GestureDetector(
                         onTap: () {
+                          print('saved');
                           productBlock.saveCart(data);
                         },
                         child: Container(

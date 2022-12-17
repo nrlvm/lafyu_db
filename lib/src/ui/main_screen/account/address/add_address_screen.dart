@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:lesson_11/src/bloc/address_bloc.dart';
 import 'package:lesson_11/src/colors/app_color.dart';
 import 'package:lesson_11/src/model/address_model.dart';
 import 'package:lesson_11/src/utils/utils.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class AddAddressScreen extends StatefulWidget {
@@ -77,7 +79,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               width: 12 * h,
             ),
             Text(
-              widget.data == null?'Add Address':'Edit Address',
+              widget.data == null ? 'Add Address' : 'Edit Address',
               style: TextStyle(
                 fontFamily: AppColor.fontFamily,
                 fontWeight: FontWeight.w700,
@@ -275,9 +277,76 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
               ),
             ),
+            GestureDetector(
+              onTap: () async {
+                if (await Permission.location.status.isGranted) {
+                  await controller.toggleUserLayer(
+                    visible: true,
+                    autoZoomEnabled: true,
+                  );
+                  print('object');
+                }
+                Position position = await _determinePosition();
+                print(' pos $position');
+                if (position != null) {
+                  print(position.latitude);
+                  print(position.longitude);
+                  var newPos = CameraPosition(
+                    zoom: 16,
+                    target: Point(
+                      latitude: position.latitude,
+                      longitude: position.longitude,
+                    ),
+                  );
+                  controller.moveCamera(
+                    CameraUpdate.newCameraPosition(newPos),
+                    animation:
+                        const MapAnimation(type: MapAnimationType.linear),
+                  );
+                  setState(() {
+                    lat = position.latitude;
+                    lon = position.longitude;
+                  });
+                }
+              },
+              child: Container(
+                height: 48 * h,
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(horizontal: 16 * w),
+                color: AppColor.red,
+              ),
+            ),
+            SizedBox(
+              height: 24 * h,
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    return await Geolocator.getCurrentPosition();
   }
 }

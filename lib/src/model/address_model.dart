@@ -16,4 +16,6 @@ class AddressModel {
         "phone_number": pNumber,
         "location": location,
       };
+
+
 }

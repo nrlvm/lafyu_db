@@ -18,7 +18,6 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
   final int _gridCount = 4;
 
-
   @override
   void initState() {
     categoryBlock.allCategory();
@@ -65,145 +64,145 @@ class _ExploreScreenState extends State<ExploreScreen> {
         ],
       ),
       body: StreamBuilder<CategoryModel>(
-          stream: categoryBlock.getCategory,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              CategoryModel data = snapshot.data!;
-              List<CategoryResult> resultsWoman = [];
-              List<CategoryResult> resultsMan = [];
-              for (int i = 0; i < data.results.length; i++) {
-                if (data.results[i].genderTypes == 1) {
-                  resultsMan.add(data.results[i]);
-                } else {
-                  resultsWoman.add(data.results[i]);
-                }
+        stream: categoryBlock.getCategory,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            CategoryModel data = snapshot.data!;
+            List<CategoryResult> resultsWoman = [];
+            List<CategoryResult> resultsMan = [];
+            for (int i = 0; i < data.results.length; i++) {
+              if (data.results[i].genderTypes == 1) {
+                resultsMan.add(data.results[i]);
+              } else {
+                resultsWoman.add(data.results[i]);
               }
-              return ListView(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16 * w,
-                ),
-                children: [
-                  SizedBox(
-                    height: 16 * h,
-                  ),
-                  Text(
-                    'Man Fashion',
-                    style: TextStyle(
-                      fontFamily: AppColor.fontFamily,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14 * h,
-                      height: 21 / 14,
-                      letterSpacing: 0.5,
-                      color: AppColor.dark,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12 * h,
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount:
-                        (resultsMan.length + _gridCount - 1) ~/ _gridCount,
-                    itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: CategoryWidget(
-                              data: resultsMan[index * _gridCount],
-                            ),
-                          ),
-                          SizedBox(width: 16 * w),
-                          Expanded(
-                            child: index * _gridCount + 1 >= resultsMan.length
-                                ? Container()
-                                : CategoryWidget(
-                                    data: resultsMan[index * _gridCount + 1],
-                                  ),
-                          ),
-                          SizedBox(width: 16 * w),
-                          Expanded(
-                            child: index * _gridCount + 2 >= resultsMan.length
-                                ? Container()
-                                : CategoryWidget(
-                                    data: resultsMan[index * _gridCount + 2],
-                                  ),
-                          ),
-                          SizedBox(width: 16 * w),
-                          Expanded(
-                            child: index * _gridCount + 3 >= resultsMan.length
-                                ? Container()
-                                : CategoryWidget(
-                                    data: resultsMan[index * _gridCount + 3],
-                                  ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 16 * h,
-                  ),
-                  Text(
-                    'Woman Fashion',
-                    style: TextStyle(
-                      fontFamily: AppColor.fontFamily,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14 * h,
-                      height: 21 / 14,
-                      letterSpacing: 0.5,
-                      color: AppColor.dark,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12 * h,
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount:
-                        (resultsWoman.length + _gridCount - 1) ~/ _gridCount,
-                    itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: CategoryWidget(
-                              data: resultsWoman[index * _gridCount],
-                            ),
-                          ),
-                          SizedBox(width: 16 * w),
-                          Expanded(
-                            child: index * _gridCount + 1 >= resultsWoman.length
-                                ? Container()
-                                : CategoryWidget(
-                                    data: resultsWoman[index * _gridCount + 1],
-                                  ),
-                          ),
-                          SizedBox(width: 16 * w),
-                          Expanded(
-                            child: index * _gridCount + 2 >= resultsWoman.length
-                                ? Container()
-                                : CategoryWidget(
-                                    data: resultsWoman[index * _gridCount + 2],
-                                  ),
-                          ),
-                          SizedBox(width: 16 * w),
-                          Expanded(
-                            child: index * _gridCount + 3 >= resultsWoman.length
-                                ? Container()
-                                : CategoryWidget(
-                                    data: resultsWoman[index * _gridCount + 3],
-                                  ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              );
             }
-            return const ExploreCategoryShimmer();
-          }),
+            return ListView(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16 * w,
+              ),
+              children: [
+                SizedBox(
+                  height: 16 * h,
+                ),
+                Text(
+                  'Man Fashion',
+                  style: TextStyle(
+                    fontFamily: AppColor.fontFamily,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14 * h,
+                    height: 21 / 14,
+                    letterSpacing: 0.5,
+                    color: AppColor.dark,
+                  ),
+                ),
+                SizedBox(
+                  height: 12 * h,
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: (resultsMan.length + _gridCount - 1) ~/ _gridCount,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: CategoryWidget(
+                            data: resultsMan[index * _gridCount],
+                          ),
+                        ),
+                        SizedBox(width: 16 * w),
+                        Expanded(
+                          child: index * _gridCount + 1 >= resultsMan.length
+                              ? Container()
+                              : CategoryWidget(
+                                  data: resultsMan[index * _gridCount + 1],
+                                ),
+                        ),
+                        SizedBox(width: 16 * w),
+                        Expanded(
+                          child: index * _gridCount + 2 >= resultsMan.length
+                              ? Container()
+                              : CategoryWidget(
+                                  data: resultsMan[index * _gridCount + 2],
+                                ),
+                        ),
+                        SizedBox(width: 16 * w),
+                        Expanded(
+                          child: index * _gridCount + 3 >= resultsMan.length
+                              ? Container()
+                              : CategoryWidget(
+                                  data: resultsMan[index * _gridCount + 3],
+                                ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 16 * h,
+                ),
+                Text(
+                  'Woman Fashion',
+                  style: TextStyle(
+                    fontFamily: AppColor.fontFamily,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14 * h,
+                    height: 21 / 14,
+                    letterSpacing: 0.5,
+                    color: AppColor.dark,
+                  ),
+                ),
+                SizedBox(
+                  height: 12 * h,
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount:
+                      (resultsWoman.length + _gridCount - 1) ~/ _gridCount,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: CategoryWidget(
+                            data: resultsWoman[index * _gridCount],
+                          ),
+                        ),
+                        SizedBox(width: 16 * w),
+                        Expanded(
+                          child: index * _gridCount + 1 >= resultsWoman.length
+                              ? Container()
+                              : CategoryWidget(
+                                  data: resultsWoman[index * _gridCount + 1],
+                                ),
+                        ),
+                        SizedBox(width: 16 * w),
+                        Expanded(
+                          child: index * _gridCount + 2 >= resultsWoman.length
+                              ? Container()
+                              : CategoryWidget(
+                                  data: resultsWoman[index * _gridCount + 2],
+                                ),
+                        ),
+                        SizedBox(width: 16 * w),
+                        Expanded(
+                          child: index * _gridCount + 3 >= resultsWoman.length
+                              ? Container()
+                              : CategoryWidget(
+                                  data: resultsWoman[index * _gridCount + 3],
+                                ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            );
+          }
+          return const ExploreCategoryShimmer();
+        },
+      ),
     );
   }
 }
